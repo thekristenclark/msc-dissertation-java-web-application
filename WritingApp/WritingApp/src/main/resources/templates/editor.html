@@ -1,17 +1,165 @@
 <!DOCTYPE HTML>
 <html xmlns:th="https://www.thymeleaf.org">
-<head> 
-    <title>Getting Started: Handling Form Submission</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-</head>
-<body>
-	<h1>Form</h1>
-    <form action="#" th:action="@{/editor}" th:object="${editor}" method="post">
-    	<p>User ID: <input type="text" th:field="*{userid}" /></p>
-        <p>idea: <input type="text" th:field="*{idea}" /></p>
-        <p>summary: <input type="text" th:field="*{summary}" /></p>
-        <p>Create Date: <input type="text" th:field="*{createdate}" /></p>
-        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
-    </form>
-</body>
+	<head>
+	    <title>Text Editor</title>
+	    <meta charset="UTF-8">
+	    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet" />
+		<link href="/styles.css" rel="stylesheet" />
+	
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
+		<link
+	  		rel="stylesheet"
+	  		href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css"
+		/>
+		<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+	</head>
+	
+	<body>
+		<h1>Form</h1>
+		<form action="#" th:action="@{/editor}" th:object="${editor}" method="post">
+			<p>User ID: <input type="text" th:field="*{userid}" /></p>
+	
+			<p><label for="idea-editor">Idea:</label></p>
+			<div id="idea-toolbar">
+				<span class="ql-formats">
+	    			<select class="ql-font"></select>
+	    			<select class="ql-size"></select>
+	  			</span>
+	  			<span class="ql-formats">
+	    			<button class="ql-bold"></button>
+	    			<button class="ql-italic"></button>
+	    			<button class="ql-underline"></button>
+	    			<button class="ql-strike"></button>
+	  			</span>
+	  			<span class="ql-formats">
+	    			<select class="ql-color"></select>
+	    			<select class="ql-background"></select>
+	  			</span>
+	  			<span class="ql-formats">
+	    			<button class="ql-script" value="sub"></button>
+					<button class="ql-script" value="super"></button>
+				</span>
+	 			<span class="ql-formats">
+					<button class="ql-header" value="1"></button>
+					<button class="ql-header" value="2"></button>
+					<button class="ql-blockquote"></button>
+					<button class="ql-code-block"></button>
+				</span>
+				<span class="ql-formats">
+					<button class="ql-list" value="ordered"></button>
+					<button class="ql-list" value="bullet"></button>
+					<button class="ql-indent" value="-1"></button>
+					<button class="ql-indent" value="+1"></button>
+				</span>
+				<span class="ql-formats">
+					<button class="ql-direction" value="rtl"></button>
+					<select class="ql-align"></select>
+				</span>
+				<span class="ql-formats">
+					<button class="ql-link"></button>
+					<button class="ql-image"></button>
+					<button class="ql-video"></button>
+					<button class="ql-formula"></button>
+				</span>
+				<span class="ql-formats">
+					<button class="ql-clean"></button>
+				</span>
+			</div>
+	
+			<div id="idea-editor" style="height:200px;"></div>
+	 		<input type="hidden" id="idea" name="idea" th:field="*{idea}" />
+	
+	
+			<p><label for="summary-editor">Summary:</label></p>
+			<div id="summary-toolbar">
+				<span class="ql-formats">
+	    			<select class="ql-font"></select>
+	    			<select class="ql-size"></select>
+	  			</span>
+	  			<span class="ql-formats">
+	    			<button class="ql-bold"></button>
+	    			<button class="ql-italic"></button>
+	    			<button class="ql-underline"></button>
+	    			<button class="ql-strike"></button>
+	  			</span>
+	  			<span class="ql-formats">
+	    			<select class="ql-color"></select>
+	    			<select class="ql-background"></select>
+	  			</span>
+	  			<span class="ql-formats">
+	    			<button class="ql-script" value="sub"></button>
+					<button class="ql-script" value="super"></button>
+				</span>
+	 			<span class="ql-formats">
+					<button class="ql-header" value="1"></button>
+					<button class="ql-header" value="2"></button>
+					<button class="ql-blockquote"></button>
+					<button class="ql-code-block"></button>
+				</span>
+				<span class="ql-formats">
+					<button class="ql-list" value="ordered"></button>
+					<button class="ql-list" value="bullet"></button>
+					<button class="ql-indent" value="-1"></button>
+					<button class="ql-indent" value="+1"></button>
+				</span>
+				<span class="ql-formats">
+					<button class="ql-direction" value="rtl"></button>
+					<select class="ql-align"></select>
+				</span>
+				<span class="ql-formats">
+					<button class="ql-link"></button>
+					<button class="ql-image"></button>
+					<button class="ql-video"></button>
+					<button class="ql-formula"></button>
+				</span>
+				<span class="ql-formats">
+					<button class="ql-clean"></button>
+				</span>
+			</div>
+		
+		
+			<div id="summary-editor" style="height:200px;"></div>
+			<input type="hidden" id="summary" name="summary" th:field="*{summary}" />
+	
+	        <p>Create Date: <input type="text" th:field="*{createdate}" /></p>
+	        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+	
+		</form>
+	
+		<!-- Initialize Quill editor -->
+		<script>
+		document.addEventListener('DOMContentLoaded', (event) => {
+		    const ideaQuill = new Quill('#idea-editor', {
+		    	modules: {
+		        	syntax: true,
+		        	toolbar: '#idea-toolbar',
+		      	},
+		    	placeholder: 'Write your idea here...',
+		    	theme: 'snow',
+		    });
+		
+		    const summaryQuill = new Quill('#summary-editor', {
+		    	modules: {
+		        	syntax: true,
+		        	toolbar: '#summary-toolbar',
+		      	},
+		    	placeholder: 'Write your summary here...',
+		    	theme: 'snow',
+		    });
+		
+		    // Link Quill editor content to the hidden input fields
+		    const form = document.querySelector('form');
+		    form.onsubmit = function() {
+		    	const ideaInput = document.querySelector('#idea');
+		    	const summaryInput = document.querySelector('#summary');
+		    	ideaInput.value = ideaQuill.root.innerHTML;
+		    	summaryInput.value = summaryQuill.root.innerHTML;
+		    };
+	  });
+
+		</script>
+		  
+	</body>
 </html>
