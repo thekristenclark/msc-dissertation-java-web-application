@@ -173,6 +173,10 @@
   <a href="https://github.com/NorthwoodsSoftware/GoJS/blob/master/samples/flowchart.html">full source on Github</a>
   and copy other files or scripts.
 </p>
+<p>This provided sample plotmap template is styled from the classic
+		eight-point plot arc as detailed in Nigel Watt's <em>Writing a Novel</em>. Use
+		this as a starting point for your own plot map, or feel free to use
+		another preferred plot structure.</p>
 <div id="allSampleContent" class="p-4 w-full">
           
             
@@ -524,40 +528,32 @@
       <button onclick="load()">Load</button>
       Diagram Model saved in JSON format:
       <textarea id="mySavedModel" style="width: 100%; height: 375px">{ "class": "GraphLinksModel",
-  "nodeDataArray": [
-    {"key":-1,"category":"Start","loc":"-237 41","text":"Start"},
-    {"key":-2,"category":"End","loc":"277 696","text":"End"},
-    {"category":"Conditional","text":"Is data\ntree-like?","key":-14,"loc":"40 165"},
-    {"text":"Use a TreeModel","key":-5,"loc":"-100 230"},
-    {"text":"Use a GraphLinksModel","key":-6,"loc":"180 230"},
-    {"category":"Comment","text":"GraphLinksModel\nalso allows Groups","key":-7,"loc":"362 230"},
-    {"text":"Create DIV for Diagram","key":-8,"loc":"-64 41"},
-    {"text":"Create new Diagram associated with DIV","key":-9,"loc":"164 41"},
-    {"text":"Style node templates","key":-10,"loc":"40 617"},
-    {"text":"Add data to node/linkDataArray","key":-12,"loc":"180 320"},
-    {"text":"Add data to nodeDataArray, including parent","key":-13,"loc":"-100 320"},
-    {"text":"Style link templates","key":-15,"loc":"277 617"},
-    {"category":"Conditional","text":"Should nodes be auto-positioned?","key":-16,"loc":"40 460"},
-    {"text":"Choose a layout","key":-18,"loc":"-100 525"},
-    {"text":"Set location in node data and bind","key":-17,"loc":"180 525"}
-  ],
-  "linkDataArray": [
-    {"from":-1,"to":-8},
-    {"from":-8,"to":-9},
-    {"from":-5,"to":-13},
-    {"from":-6,"to":-12},
-    {"from":-15,"to":-2},
-    {"from":-14,"to":-5,"text":"Yes"},
-    {"from":-14,"to":-6,"text":"No"},
-    {"from":-9,"to":-14},
-    {"from":-13,"to":-16},
-    {"from":-12,"to":-16},
-    {"from":-16,"to":-18,"text":"Yes"},
-    {"from":-16,"to":-17,"text":"No"},
-    {"from":-18,"to":-10},
-    {"from":-17,"to":-10},
-    {"from":-10,"to":-15}
-  ]}
+		"nodeDataArray": [
+			{"category":"Comment","text":"Add comments about\nthe plot here.","key":-4,"loc":"107. -7.4"},
+			{"category":"Start","text":"Start","key":-2,"loc":"-131 -6"},
+			{"text":"Stasis","key":-3,"loc":"-29 -6"},
+			{"text":"Trigger","key":-5,"loc":"17.5 69.58"},
+			{"text":"The Quest","key":-6,"loc":"67.3650890531994 145.8095238095238"},
+			{"text":"Surprise","key":-7,"loc":"129 219"},
+			{"category":"Conditional","text":"Critical Choice","key":-8,"loc":"180.5 302"},
+			{"text":"Climax","key":-9,"loc":"230.7 390.6"},
+			{"text":"Reversal","key":-10,"loc":"305.6 463.5"},
+			{"text":"Resolution","key":-11,"loc":"377 546"},
+			{"category":"End","text":"End","key":-12,"loc":"378 623"},
+			{"category":"Comment","text":"Zoom in and out to add more space for the map","key":-13,"loc":"286 142"},
+			{"category":"Comment","text":"Add and edit points on the map as you develop your plot!","key":-14,"loc":"-77 255.7"}
+		],
+		"linkDataArray": [
+			{"from":-3,"to":-5,"points":[-29.238084338960178,13.76117590041384,-29.238084338960178,23.76117590041384,-29.238084338960178,31.617058890206433,17.746021089099756,31.617058890206433,17.746021089099756,39.47294187999903,17.746021089099756,49.47294187999903]},
+			{"from":-2,"to":-3,"points":[-98.35791815317363,-6.240063621884307,-88.35791815317363,-6.240063621884307,-79.70283980807862,-6.240063621884307,-79.70283980807862,-6.367057436988503,-71.04776146298362,-6.367057436988503,-61.047761462983615,-6.367057436988503]},
+			{"from":-5,"to":-6,"points":[17.5,89.70823333740233,17.5,99.70823333740233,17.5,107.69476190476189,67.3650890531994,107.69476190476189,67.3650890531994,115.68129047212145,67.3650890531994,125.68129047212145]},
+			{"from":-6,"to":-7,"points":[67.3650890531994,165.93775714692612,67.3650890531994,175.93775714692612,67.3650890531994,182.40476190476187,129,182.40476190476187,129,188.87176666259765,129,198.87176666259765]},
+			{"from":-7,"to":-8,"points":[129.11115955171135,239.26907650175553,129.11115955171135,249.26907650175553,129.11115955171135,262.5694095066616,180.53970336914068,262.5694095066616,180.53970336914068,275.86974251156767,180.53970336914068,285.86974251156767]},
+			{"from":-8,"to":-9,"points":[180.53970336914068,318.12620918637236,180.53970336914068,328.12620918637236,180.53970336914068,344.32339350382495,230.6666477748326,344.32339350382495,230.6666477748326,360.52057782127747,230.6666477748326,370.52057782127747]},
+			{"from":-9,"to":-10,"points":[230.6666477748326,410.77704449608217,230.6666477748326,420.77704449608217,230.6666477748326,427.06946091424857,305.5555855887278,427.06946091424857,305.5555855887278,433.3618773324149,305.5555855887278,443.3618773324149]},
+			{"from":-10,"to":-11,"points":[305.5555855887278,483.6183440072196,305.5555855887278,493.6183440072196,305.5555855887278,504.7281812032064,377.3016851515997,504.7281812032064,377.3016851515997,515.8380183991932,377.3016851515997,525.8380183991932]},
+			{"from":-11,"to":-12,"points":[377.3016851515997,566.0944850739978,377.3016851515997,576.0944850739978,377.3016851515997,585.0450663979532,377.65077427455356,585.0450663979532,377.65077427455356,593.9956477219084,377.65077427455356,603.9956477219084]}
+			]}
       </textarea>
       <p id="hidden" style="padding: 0; height: 0px">this forces the font to load in Chromium browsers</p>
     </div>
