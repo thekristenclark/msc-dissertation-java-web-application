@@ -8,13 +8,14 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.dissertation.WritingApp.repositories.UserRepository;
+
 @Document
 public class User implements UserDetails {
     private @MongoId ObjectId id;
     private String username;
     private String password;
     private Set<UserRole> userRoles;
-
       
     
     public User(String username, String password, Set<UserRole> userRoles) {
@@ -89,5 +90,4 @@ public class User implements UserDetails {
     public int hashCode() {
         return Objects.hash(username);
     }
-
 }

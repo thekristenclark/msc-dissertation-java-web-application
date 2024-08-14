@@ -15,7 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class ApplicationConfig {
 	 private final CustomUserDetailService customUserDetailService;
 	 
-	 	// added to ensure proper initalization before being used
+	 	// added to ensure proper initialization before being used
 	    @Autowired
 	    public ApplicationConfig(CustomUserDetailService customUserDetailService) {
 	        this.customUserDetailService = customUserDetailService;
@@ -23,7 +23,8 @@ public class ApplicationConfig {
 	    
 	    @Bean
 	    public UserDetailsService userDetailsService() {
-	        return customUserDetailService::loadUserByUsername;
+//	        return customUserDetailService::loadUserByUsername;
+	    	return customUserDetailService;
 	    }
 
 	    @Bean
