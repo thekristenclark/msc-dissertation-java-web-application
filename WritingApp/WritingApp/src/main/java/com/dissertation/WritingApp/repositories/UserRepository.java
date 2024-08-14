@@ -1,11 +1,13 @@
 package com.dissertation.WritingApp.repositories;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.mongodb.repository.Query;
 
-import com.dissertation.WritingApp.models.User;
+import com.dissertation.WritingApp.domain.User;
 
-@Repository
 public interface UserRepository extends MongoRepository<User, String> {
 
+    @Query("{username:'?0'}")
+    User findUserByUsername(String username);
+    
 }

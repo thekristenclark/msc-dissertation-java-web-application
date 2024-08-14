@@ -12,9 +12,10 @@ import com.dissertation.WritingApp.models.Editor;
 //import ch.qos.logback.core.model.Model;
 
 @Controller
+@RequestMapping("/editor")
+
 public class EditorController {
 
-	@RequestMapping("/editor")
 	@GetMapping
 	public String showHomePage(Model model) {
 	    model.addAttribute("editor", new Editor());
@@ -25,6 +26,7 @@ public class EditorController {
 	public String formSubmit(@ModelAttribute Editor editor, Model model) {
 		model.addAttribute("editor", editor);
 	    return "in post Method";
+	//	return "editor.html";
 	  }
 	
 }

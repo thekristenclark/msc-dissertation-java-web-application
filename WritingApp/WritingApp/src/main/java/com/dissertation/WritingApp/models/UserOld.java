@@ -5,7 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 @Document
-public class User {
+public class UserOld {
 	@Id
 	private String id;
 	
@@ -14,9 +14,9 @@ public class User {
 	@Field
 	private String lastName;
 	
-	public User() {}
+	public UserOld() {}
 	
-	public User(String firstName, String lastName) {
+	public UserOld(String firstName, String lastName) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
