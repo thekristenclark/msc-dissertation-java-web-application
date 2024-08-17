@@ -1,4 +1,4 @@
-package com.dissertation.WritingApp.config;
+package com.dissertation.WritingApp.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -13,11 +13,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class ApplicationConfig {
-	 private final CustomUserDetailService customUserDetailService;
+	 private final CustomUserDetailsService customUserDetailService;
 	 
 	 	// added to ensure proper initialization before being used
-	    @Autowired
-	    public ApplicationConfig(CustomUserDetailService customUserDetailService) {
+//	    @Autowired
+	    public ApplicationConfig(CustomUserDetailsService customUserDetailService) {
 	        this.customUserDetailService = customUserDetailService;
 	    }
 	    
@@ -27,21 +27,21 @@ public class ApplicationConfig {
 	    	return customUserDetailService;
 	    }
 
-	    @Bean
-	    public AuthenticationProvider authenticationProvider() {
-	        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-	        authProvider.setUserDetailsService(userDetailsService());
-	        authProvider.setPasswordEncoder(passwordEncoder());
-	        return authProvider;
-	    }
+//	    @Bean
+//	    public AuthenticationProvider authenticationProvider() {
+//	        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+//	        authProvider.setUserDetailsService(userDetailsService());
+//	        authProvider.setPasswordEncoder(passwordEncoder());
+//	        return authProvider;
+//	    }
 
 	    @Bean
 	    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
 	        return config.getAuthenticationManager();
 	    }
 
-	    @Bean
-	    public PasswordEncoder passwordEncoder() {
-	        return new BCryptPasswordEncoder();
-	    }
+//	    @Bean
+//	    public PasswordEncoder passwordEncoder() {
+//	        return new BCryptPasswordEncoder();
+//	    }
 }

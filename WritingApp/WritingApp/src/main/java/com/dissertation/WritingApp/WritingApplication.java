@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 import com.dissertation.WritingApp.domain.Role;
 import com.dissertation.WritingApp.domain.User;
@@ -17,18 +19,20 @@ import com.dissertation.WritingApp.repositories.UserRepository;
 
 
 @SpringBootApplication
+@ComponentScan(basePackages = "com.dissertation.WritingApp")
+@EnableMongoRepositories(basePackages = "com.dissertation.WritingApp.repositories")
 public class WritingApplication implements CommandLineRunner{
 
-	private final UserRepository userRepository;
-	private final EditorRepository editorRepository;
+//	private final UserRepository userRepository;
+//	private final EditorRepository editorRepository;
 	
 	
-	@Autowired
+//	@Autowired
 	public WritingApplication(UserRepository userRepository, EditorRepository editorRepository) {
 //	public WritingApplication(EditorRepository editorRepository) {
 //
-		this.userRepository = userRepository;
-		this.editorRepository = editorRepository;
+//		this.userRepository = userRepository;
+//		this.editorRepository = editorRepository;
 	}
 		
 	public static void main(String[] args) {
@@ -38,20 +42,20 @@ public class WritingApplication implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 		
-		Set a = new HashSet();
-		Role role = new Role();
-		role.setName("ROLE_ADMIN");
-		UserRole userrole = new UserRole();
-		userrole.setRole(role);
-		a.add(userrole);
+//		Set a = new HashSet();
+//		Role role = new Role();
+//		role.setName("ROLE_ADMIN");
+//		UserRole userrole = new UserRole();
+//		userrole.setRole(role);
+//		a.add(userrole);
 		
-		if (userRepository.findAll().isEmpty()){
-	//		userRepository.save(new UserOld("Alice", "Smith"));
-	//		userRepository.save(new UserOld("Bob", "Jones"));
-			userRepository.save(new User("kclark","BR549",a));
-			userRepository.save(new User("cManning","BR549",a)); 
-
-		}
+//		if (userRepository.findAll().isEmpty()){
+//	//		userRepository.save(new UserOld("Alice", "Smith"));
+//	//		userRepository.save(new UserOld("Bob", "Jones"));
+//			userRepository.save(new User("kclark","BR549",a));
+//			userRepository.save(new User("cManning","BR549",a)); 
+//
+//		}
 
 	
 //		if (editorRepository.findAll().isEmpty()) {
