@@ -136,27 +136,40 @@
 		        	syntax: true,
 		        	toolbar: '#idea-toolbar',
 		      	},
-		    	placeholder: 'Write your ideas for character notes here...',
 		    	theme: 'snow',
 		    });
-		
+		    
+		    ideaQuill.root.innerHTML = document.querySelector('#idea').value;
+		    		
 		    const summaryQuill = new Quill('#summary-editor', {
 		    	modules: {
 		        	syntax: true,
 		        	toolbar: '#summary-toolbar',
 		      	},
-		    	placeholder: 'Write your story here...',
+		//    	placeholder: 'Write your story here...',
 		    	theme: 'snow',
 		    });
+		    
+		    summaryQuill.root.innerHTML = document.querySelector('#summary').value;
+		    		    
+		    // Populate the Quill editors with the existing content
+          //  ideaQuill.root.innerHTML = [[${editor.idea}]];
+           // summaryQuill.root.innerHTML = [[${editor.summary}]];
 		
 		    // Link Quill editor content to the hidden input fields
-		    const form = document.querySelector('form');
-		    form.onsubmit = function() {
-		    	const ideaInput = document.querySelector('#idea');
-		    	const summaryInput = document.querySelector('#summary');
-		    	ideaInput.value = ideaQuill.root.innerHTML;
-		    	summaryInput.value = summaryQuill.root.innerHTML;
-		    };
+	//	    const form = document.querySelector('form');
+	//	    form.onsubmit = function() {
+	//	    	const ideaInput = document.querySelector('#idea');
+	//	    	const summaryInput = document.querySelector('#summary');
+	//	    	ideaInput.value = ideaQuill.root.innerHTML;
+	//	    	summaryInput.value = summaryQuill.root.innerHTML;
+	//	    };
+	
+	 		document.querySelector('form').onsubmit = () => {
+            	document.querySelector('#idea').value = ideaQuill.root.innerHTML;
+                document.querySelector('#summary').value = summaryQuill.root.innerHTML;
+            };
+	
 	  });
 
 		</script>

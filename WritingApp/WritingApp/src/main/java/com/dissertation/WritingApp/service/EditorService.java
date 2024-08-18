@@ -1,5 +1,6 @@
 package com.dissertation.WritingApp.service;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,4 +16,9 @@ public class EditorService {
     public Editor saveEditor(Editor editor) {
         return editorRepository.save(editor);
     }
+    
+    public Editor findLatestEditorByUserId(ObjectId userId) {
+        return editorRepository.findByUserIdOrderByCreateDateDesc(userId);
+    }
+
 }
