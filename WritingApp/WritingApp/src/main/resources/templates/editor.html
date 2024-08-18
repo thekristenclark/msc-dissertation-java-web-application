@@ -14,10 +14,43 @@
 		/>
 		<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+	
+		<style>
+		body {
+		   background-color: #f5f5f5;
+		   margin: 0;
+		   padding: 0;
+		  }
+		
+		  .dashboard {
+		   background-color: #5926db;
+		   color: #fff;
+		   padding: 40px;
+		   text-align: center;
+		  }
+		
+		  .dashboard_title {
+		   font-size: 24px;
+		   margin-top: 0;
+		  }
+		
+		  .navigation {
+		   text-align: center;
+		   color: white;
+		  }
+		</style>
 	</head>
 	
 	<body>
-		<h1>Writing App</h1>
+		<div class="dashboard">
+	  		<h1 class="dashboard_title">Writing App</h1>
+			  <div class="navigation">
+			  	<span style="color: white;"><a th:href="@{/home}"><button>Home</button></a></span>
+			   	<span sec:authorize="isAuthenticated" style="color: white;"><a th:href="@{/logout}"><button>Logout</button></a></span>
+			  </div>
+		 </div>
+	    		
+		<div class="container">
 		<form action="#" th:action="@{/editor}" th:object="${editor}" method="post">
        <!--  	<input type="hidden" id="userId" name="userId" th:field="*{userId}" /> <!-- hidden field for User ID -->
 
@@ -174,6 +207,7 @@
 
 		</script>
 		  
+	</div>
 	</body>
 	
 	<body>
