@@ -2,20 +2,29 @@
 
 package com.dissertation.WritingApp.dtos;
 
+import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.mapping.MongoId;
+
 public class UserDto {
 
+	private @MongoId ObjectId userId;
 	private String username;
 	private String password;
 	private String fullname;
 	
-	 public UserDto(String username, String password, String fullname) {
+	 public UserDto(ObjectId userId, String username, String password, String fullname) {
 		  super();
+		  this.userId = userId;
 		  this.username = username;
 		  this.password = password;
 		  this.fullname = fullname;
 	 }
 	
-	 public String getUsername() {
+	public ObjectId getUserId() {
+		return userId;
+	}
+	 
+	public String getUsername() {
 		 return username;
 	}
 

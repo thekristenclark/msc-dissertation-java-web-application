@@ -19,8 +19,10 @@
 	<body>
 		<h1>Writing App</h1>
 		<form action="#" th:action="@{/editor}" th:object="${editor}" method="post">
-			<p>User ID: <input type="text" th:field="*{userid}" /></p>
-	
+       <!--  	<input type="hidden" id="userId" name="userId" th:field="*{userId}" /> <!-- hidden field for User ID -->
+
+		<p>User Id: <span th:text="${userId}"></span></p>
+
 			<p><label for="idea-editor">Idea:</label></p>
 			<div id="idea-toolbar">
 				<span class="ql-formats">
@@ -119,11 +121,9 @@
 				</span>
 			</div>
 		
-		
 			<div id="summary-editor" style="height:200px;"></div>
 			<input type="hidden" id="summary" name="summary" th:field="*{summary}" />
 	
-	        <p>Create Date: <input type="text" th:field="*{createdate}" /></p>
 	        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
 	
 		</form>

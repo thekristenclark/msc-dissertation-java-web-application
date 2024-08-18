@@ -1,50 +1,40 @@
 package  com.dissertation.WritingApp.models;
 
+import java.time.LocalDateTime;
+
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 
 @Document
 public class Editor {
-	@Id
-	private String id;
+//	@Id
+//	private String id;
 	
-	@Field
-	private String userid;
-	
-	@Field
+	private @MongoId ObjectId userId;
 	private String idea;
-
-	@Field
 	private String summary;
-	
-	@Field
-	private String createdate;
+	private LocalDateTime createDate;
 	
 	public Editor() {}
 	
-	public Editor(String userid, String idea, String summary, String createdate) {
+	public Editor(ObjectId userId, String idea, String summary, LocalDateTime createDate) {
 		super();
-		this.userid=userid;
+		this.userId=userId;
 		this.idea=idea;
 		this.summary=summary;
-		this.createdate=createdate;
+		this.createDate=createDate;
 	}
 
-	public String getId() {
-		return id;
+	// getters and setters
+	public ObjectId getUserId() {
+		return userId;
 	}
 
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public String getUserid() {
-		return userid;
-	}
-
-	public void setUserid(String userid) {
-		this.userid = userid;
+	public void setUserId(ObjectId userId) {
+		this.userId = userId;
 	}
 
 	public String getIdea() {
@@ -63,12 +53,12 @@ public class Editor {
 		this.summary = summary;
 	}
 
-	public String getCreatedate() {
-		return createdate;
+	public LocalDateTime getCreateDate() {
+		return createDate;
 	}
 
-	public void setCreatedate(String createdate) {
-		this.createdate = createdate;
+	public void setCreateDate(LocalDateTime createDate) {
+		this.createDate = createDate;
 	}
 
 //	@Override

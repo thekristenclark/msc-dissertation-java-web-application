@@ -10,22 +10,23 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
 
 @Document
 public class User {
-    private @MongoId ObjectId id;
+    private @MongoId ObjectId userId;
     private String username;
     private String password;
     private Set<UserRole> userRoles;
     private String fullname;
     
-    public User(String username, String password, String fullname) {
+    public User(ObjectId userId, String username, String password, String fullname) {
     	super();
+    	this.userId = userId;
     	this.username = username;
     	this.password = password;
     	this.fullname = fullname;
 
     }
 
-	public ObjectId getId() {
-        return id;
+	public ObjectId getUserId() {
+        return userId;
     }
 
  //   @Override
@@ -65,7 +66,7 @@ public class User {
 
     @Override
     public String toString() {
-     return "User [id=" + id + ", username=" + username + ", password=" + password + "]";
+     return "User [id=" + userId + ", username=" + username + ", password=" + password + "]";
     }
     
 }
