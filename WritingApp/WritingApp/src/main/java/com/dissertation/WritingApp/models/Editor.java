@@ -17,15 +17,17 @@ public class Editor {
 	private String idea;
 	private String summary;
 	private LocalDateTime createDate;
+	private String plotMapData; // stores the gojs json data
 	
 	public Editor() {}
 	
-	public Editor(ObjectId userId, String idea, String summary, LocalDateTime createDate) {
+	public Editor(ObjectId userId, String idea, String summary, LocalDateTime createDate, String plotMapData) {
 		super();
 		this.userId=userId;
 		this.idea=idea;
 		this.summary=summary;
 		this.createDate=createDate;
+		this.plotMapData=plotMapData;
 	}
 
 	// getters and setters
@@ -60,6 +62,14 @@ public class Editor {
 	public void setCreateDate(LocalDateTime createDate) {
 		this.createDate = createDate;
 	}
+	
+    public String getPlotMapData() {
+        return plotMapData;
+    }
+
+    public void setPlotMapData(String plotMapData) {
+        this.plotMapData = plotMapData;
+    }
 
 //	@Override
 //	public String toString() {

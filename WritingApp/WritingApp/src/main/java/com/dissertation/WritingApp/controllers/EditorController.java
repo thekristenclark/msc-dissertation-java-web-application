@@ -9,9 +9,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.dissertation.WritingApp.domain.User;
 import com.dissertation.WritingApp.models.Editor;
+
 import com.dissertation.WritingApp.service.EditorService;
 import com.dissertation.WritingApp.service.UserService;
 
@@ -38,6 +40,7 @@ public class EditorController {
             Editor editor = editorService.findLatestEditorByUserId(user.getUserId());
             model.addAttribute("userId", user.getUserId().toString());
             model.addAttribute("editor", editor != null ? editor : new Editor());
+            model.addAttribute("plotMapData", editor != null ? editor.getPlotMapData() : "");
         } else {
             model.addAttribute("error", "User not found");
         }
@@ -47,7 +50,7 @@ public class EditorController {
 
     // submission of the editor form
     @PostMapping("/editor")
-    public String submitEditorForm(@ModelAttribute Editor editor, Model model) {
+    public String submitEditorForm(@ModelAttribute Editor editor, @RequestParam("plotMapData") String plotMapData, Model model) {
         
     	// Retrieve the current user's username
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -58,6 +61,7 @@ public class EditorController {
             // Set creation date and userId, then save the editor
             editor.setCreateDate(LocalDateTime.now());
             editor.setUserId(user.getUserId());
+            editor.setPlotMapData(plotMapData);
             editorService.saveEditor(editor);
             model.addAttribute("message", "Editor updated successfully!");
         } else {
