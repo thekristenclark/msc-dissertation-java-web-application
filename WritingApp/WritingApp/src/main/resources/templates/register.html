@@ -13,7 +13,7 @@
    justify-content: center;
    align-items: center;
    height: 100vh;
-   background-color: #f4f4f4;
+   background-color: #5926db;
   }
 
   .form-container {
@@ -25,7 +25,7 @@
   }
 
   h2 {
-   color: #5e057e;
+   color: #5926db;
    text-align: center;
    margin-bottom: 20px;
   }
@@ -33,7 +33,7 @@
   label {
    display: block;
    margin-bottom: 8px;
-   color: #5e057e;
+   color: #5926db;
   }
 
   input {
@@ -46,7 +46,7 @@
   }
 
   button {
-   background-color: #5e057e;
+   background-color: #5926db;
    color: #fff;
    padding: 10px 20px;
    border: none;
@@ -67,7 +67,7 @@
   }
 
   .success-message {
-   background-color: #5e057e;
+   background-color: #5926db;
    color: #fff;
    padding: 10px;
    border-radius: 3px;
@@ -89,16 +89,16 @@
   <form th:action="@{/register}" method="post" role="form" th:object="${user}">
 
    <label for="fullname">Full Name:</label>
-   <input th:field="*{fullname}" type="text" id="fullname" name="fullname" placeholder="Enter your FullName"
+   <input th:field="*{fullname}" type="text" id="fullname" name="fullname" placeholder="Please enter your full name..."
     required>
 
    <label for="username">Username:</label>
-   <input th:field="*{username}" type="text" id="username" name="username" placeholder="Enter your Username"
+   <input th:field="*{username}" type="text" id="username" name="username" placeholder="Please create a Username..."
     required>
 
    <label for="password">Password:</label>
    <input th:field="*{password}" type="password" id="password" name="password"
-    placeholder="Enter your Password" required>
+    placeholder="Please create a Password..." required>
 
    <button type="submit">Register</button>
   </form>
