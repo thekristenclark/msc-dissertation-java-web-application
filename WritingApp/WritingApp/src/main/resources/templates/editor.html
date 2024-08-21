@@ -81,9 +81,11 @@
 		 </header>
 		 
     <div class="form-container">
+    
+      
 		<form action="#" th:action="@{/editor}" th:object="${editor}" method="post" id="kform">
  	    	<input type="hidden" id="userId" name="userId" th:field="*{userId}" /> <!-- hidden field for User ID -->
-            
+          
             <!--  Quill Editor -->
 			<div>
 					<p><label for="idea-editor">Character Notes:</label></p>
@@ -188,7 +190,6 @@
 					<input type="hidden" id="summary" name="summary" th:field="*{summary}" />
 				</div>
 
-
             <!-- Hidden field for GoJS diagram data -->
             <input type="hidden" id="diagramData" name="diagramData">
 
@@ -208,6 +209,7 @@
 
     myDiagram = new go.Diagram('myDiagramDIV', {
       'undoManager.isEnabled': true // enable undo & redo
+      
     });
 
     // when the document is modified, add a "*" to the title and enable the "Save" button
@@ -237,6 +239,20 @@
         div: '#ede9e0'
       }
     });	
+    
+    myDiagram.themeManager.set('dark', {
+      colors: {
+        text: '#fff',
+        step: '#414a8d',
+        conditional: '#88afa2',
+        comment: '#bfb674',
+        bgText: '#fff',
+        link: '#fdb71c',
+        linkOver: '#475569',
+        div: '#141e37'
+      }
+    });
+    
 	
     defineFigures();
 
@@ -452,6 +468,14 @@
       return geo;
     });
   }
+  
+    function changeTheme() {
+    const myDiagram = go.Diagram.fromDiv('myDiagramDiv');
+    if (myDiagram) {
+      myDiagram.themeManager.currentTheme = document.getElementById('theme').value;
+    }
+  }
+  
 
   window.addEventListener('DOMContentLoaded', () => {
     

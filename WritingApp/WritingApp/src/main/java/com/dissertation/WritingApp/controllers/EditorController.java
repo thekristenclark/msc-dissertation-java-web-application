@@ -40,7 +40,7 @@ public class EditorController {
             Editor editor = editorService.findLatestEditorByUserId(user.getUserId());
             model.addAttribute("userId", user.getUserId().toString());
             model.addAttribute("editor", editor != null ? editor : new Editor());
-            model.addAttribute("plotMapData", editor != null ? editor.getPlotMapData() : "");
+   //         model.addAttribute("diagramData", editor != null ? editor.getDiagramData() : "");
         } else {
             model.addAttribute("error", "User not found");
         }
@@ -50,7 +50,7 @@ public class EditorController {
 
     // submission of the editor form
     @PostMapping("/editor")
-    public String submitEditorForm(@ModelAttribute Editor editor, @RequestParam("plotMapData") String plotMapData, Model model) {
+    public String submitEditorForm(@ModelAttribute Editor editor, @RequestParam("diagramData") String diagramData, Model model) {
         
     	// Retrieve the current user's username
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -61,7 +61,7 @@ public class EditorController {
             // Set creation date and userId, then save the editor
             editor.setCreateDate(LocalDateTime.now());
             editor.setUserId(user.getUserId());
-            editor.setPlotMapData(plotMapData);
+            editor.setDiagramData(diagramData);
             editorService.saveEditor(editor);
             model.addAttribute("message", "Editor updated successfully!");
         } else {
