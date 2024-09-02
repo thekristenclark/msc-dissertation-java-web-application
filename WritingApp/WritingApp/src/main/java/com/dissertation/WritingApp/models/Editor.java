@@ -3,29 +3,25 @@ package  com.dissertation.WritingApp.models;
 import java.time.LocalDateTime;
 
 import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
 @Document
 public class Editor {
-//	@Id
-//	private String id;
 	
 	private @MongoId ObjectId userId;
-	private String idea;
-	private String summary;
+	private String charNotes;
+	private String story;
 	private LocalDateTime createDate;
 	private String diagramData; // stores the gojs json data
 	
 	public Editor() {}
 	
-	public Editor(ObjectId userId, String idea, String summary, LocalDateTime createDate, String diagramData) {
+	public Editor(ObjectId userId, String charNotes, String story, LocalDateTime createDate, String diagramData) {
 		super();
 		this.userId=userId;
-		this.idea=idea;
-		this.summary=summary;
+		this.charNotes=charNotes;
+		this.story=story;
 		this.createDate=createDate;
 		this.diagramData=diagramData;
 	}
@@ -39,20 +35,20 @@ public class Editor {
 		this.userId = userId;
 	}
 
-	public String getIdea() {
-		return idea;
+	public String getCharNotes() {
+		return charNotes;
 	}
 
-	public void setIdea(String idea) {
-		this.idea = idea;
+	public void setCharNotes(String charNotes) {
+		this.charNotes = charNotes;
 	}
 
-	public String getSummary() {
-		return summary;
+	public String getStory() {
+		return story;
 	}
 
-	public void setSummary(String summary) {
-		this.summary = summary;
+	public void setStory(String story) {
+		this.story = story;
 	}
 
 	public LocalDateTime getCreateDate() {

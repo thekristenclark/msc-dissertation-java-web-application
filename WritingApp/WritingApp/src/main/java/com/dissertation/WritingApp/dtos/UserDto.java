@@ -11,13 +11,15 @@ public class UserDto {
 	private String username;
 	private String password;
 	private String fullname;
+	private String email;
 	
-	 public UserDto(ObjectId userId, String username, String password, String fullname) {
+	 public UserDto(ObjectId userId, String username, String password, String fullname, String email) {
 		  super();
 		  this.userId = userId;
 		  this.username = username;
 		  this.password = password;
 		  this.fullname = fullname;
+		  this.email = email;
 	 }
 	
 	public ObjectId getUserId() {
@@ -48,7 +50,15 @@ public class UserDto {
 		this.fullname = fullname;
 	}
 	 
-    @Override
+    public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	@Override
     public String toString() {
      return "UserDto [username=" + username + ", password=" + password + "]";
     }

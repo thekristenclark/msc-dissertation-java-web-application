@@ -15,13 +15,16 @@ public class User {
     private String password;
     private Set<UserRole> userRoles;
     private String fullname;
+    private String email;
+    private boolean enabled = false; // To track email confirmation
     
-    public User(ObjectId userId, String username, String password, String fullname) {
+    public User(ObjectId userId, String username, String password, String fullname, String email) {
     	super();
     	this.userId = userId;
     	this.username = username;
     	this.password = password;
     	this.fullname = fullname;
+    	this.email = email;
 
     }
 
@@ -63,8 +66,24 @@ public class User {
     public void setFullname(String fullname) {
     	this.fullname = fullname;
 	}
+    
+    public String getEmail() {
+		return email;
+	}
 
-    @Override
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	@Override
     public String toString() {
      return "User [id=" + userId + ", username=" + username + ", password=" + password + "]";
     }

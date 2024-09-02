@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.dissertation.WritingApp.domain.User;
 import com.dissertation.WritingApp.service.UserService;
@@ -60,6 +61,17 @@ public class UserController {
 	  userService.save(userDto);
 	  return "redirect:/register?success";
 	 }
+	 
+	  @GetMapping("/confirm")
+	  public String confirmAccount(@RequestParam("token") String token) {
+	      boolean confirmed = userService.confirmUser(token);
+
+	      if (confirmed) {
+	          return "Account successfully confirmed. You can now log in.";
+	      } else {
+	          return "Confirmation failed. Invalid token.";
+	      }
+	  }
 	
 /*	@RequestMapping(value = "", method = RequestMethod.GET)
 	public List<User> getAllUsers() {

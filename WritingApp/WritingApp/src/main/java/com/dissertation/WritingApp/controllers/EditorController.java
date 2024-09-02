@@ -40,7 +40,7 @@ public class EditorController {
             Editor editor = editorService.findLatestEditorByUserId(user.getUserId());
             model.addAttribute("userId", user.getUserId().toString());
             model.addAttribute("editor", editor != null ? editor : new Editor());
-   //         model.addAttribute("diagramData", editor != null ? editor.getDiagramData() : "");
+            model.addAttribute("diagramData", editor != null ? editor.getDiagramData() : "");
         } else {
             model.addAttribute("error", "User not found");
         }

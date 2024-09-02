@@ -88,8 +88,8 @@
           
             <!--  Quill Editor -->
 			<div>
-					<p><label for="idea-editor">Character Notes:</label></p>
-					<div id="idea-toolbar">
+					<p><label for="charNotes-editor">Character Notes:</label></p>
+					<div id="charNotes-toolbar">
 						<span class="ql-formats">
 			    			<select class="ql-font"></select>
 			    			<select class="ql-size"></select>
@@ -134,14 +134,14 @@
 							<button class="ql-clean"></button>
 						</span>
 					</div>
-					<div id="idea-editor" style="height:200px;"></div>
-		 			<input type="hidden" id="idea" name="idea" th:field="*{idea}" />
+					<div id="charNotes-editor" style="height:200px;"></div>
+		 			<input type="hidden" id="charNotes" name="charNotes" th:field="*{charNotes}" />
 				</div>
             
-            <!-- Quill Summary Editor -->
+            <!-- Quill Story Editor -->
 			<div>
-					<p><label for="summary-editor">Story Editor:</label></p>
-					<div id="summary-toolbar">
+					<p><label for="story-editor">Story Editor:</label></p>
+					<div id="story-toolbar">
 						<span class="ql-formats">
 			    			<select class="ql-font"></select>
 			    			<select class="ql-size"></select>
@@ -186,8 +186,8 @@
 							<button class="ql-clean"></button>
 						</span>
 					</div>
-					<div id="summary-editor" style="height:200px;"></div>
-					<input type="hidden" id="summary" name="summary" th:field="*{summary}" />
+					<div id="story-editor" style="height:200px;"></div>
+					<input type="hidden" id="story" name="story" th:field="*{story}" />
 				</div>
 
             <!-- Hidden field for GoJS diagram data -->
@@ -480,44 +480,41 @@
   window.addEventListener('DOMContentLoaded', () => {
     
     			// intialize quill editors
-			const ideaQuill = new Quill('#idea-editor', {
+			const charNotesQuill = new Quill('#charNotes-editor', {
 		    	modules: {
 		        	syntax: true,
-		        	toolbar: '#idea-toolbar',
+		        	toolbar: '#charNotes-toolbar',
 		      	},
 		    	theme: 'snow',
 		    });
 		    		    		    		
-		    const summaryQuill = new Quill('#summary-editor', {
+		    const storyQuill = new Quill('#story-editor', {
 		    	modules: {
 		        	syntax: true,
-		        	toolbar: '#summary-toolbar',
+		        	toolbar: '#story-toolbar',
 		      	},
 		    	theme: 'snow',
 		    });
 		  	
 		  	// Populate Quill editors and diagram with initial content
-			const ideaContent = document.querySelector('#idea').value; 
-			const summaryContent = document.querySelector('#summary').value;
+			const charNotesContent = document.querySelector('#charNotes').value; 
+			const storyContent = document.querySelector('#story').value;
 			const diagramContent = document.querySelector('#diagramData').value; // Changed from '#diagram.JSON'
 		   
-			if (ideaContent) {
-                ideaQuill.root.innerHTML = ideaContent;
+			if (charNotesContent) {
+                charNotesQuill.root.innerHTML = charNotesContent;
             }
-            if (summaryContent) {
-                summaryQuill.root.innerHTML = summaryContent;
-            }
-           if (diagramContent) {
-                summaryQuill.root.innerHTML = summaryContent;
+            if (storyContent) {
+                storyQuill.root.innerHTML = storyContent;
             }
 			if (diagramContent) {
-      			diagram.model = go.Model.fromJson(diagramContent);
+      			myDiagram.model = go.Model.fromJson(diagramContent);
 			}
 		  	
 		  	// Save Quill content to hidden fields on form submission
 		  	document.querySelector('form').onsubmit = () => {
-            	document.querySelector('#idea').value = ideaQuill.root.innerHTML;
-                document.querySelector('#summary').value = summaryQuill.root.innerHTML;
+            	document.querySelector('#charNotes').value = charNotesQuill.root.innerHTML;
+                document.querySelector('#story').value = storyQuill.root.innerHTML;
       			document.querySelector('#diagramData').value = myDiagram.model.toJson();
             };
     
