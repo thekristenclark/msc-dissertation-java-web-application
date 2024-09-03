@@ -1,3 +1,5 @@
+// handles http requests related to user registration and email confirmation
+
 package com.dissertation.WritingApp.controllers;
 
 import java.security.Principal;
@@ -21,14 +23,13 @@ public class UserController {
 
 //	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
-	@Autowired
 	private UserDetailsService userDetailsService;
-	
-	
 	private UserService userService;
 
-	public UserController(UserService userService) {
+	@Autowired
+	public UserController(UserService userService, UserDetailsService userDetailsService) {
 		this.userService = userService;
+		this.userDetailsService = userDetailsService;
 	}
 	
 	 @GetMapping("/home")
@@ -40,9 +41,8 @@ public class UserController {
 	
 	 @GetMapping("/login")
 	 public String login(Model model, UserDto userDto) {
-
-	  model.addAttribute("user", userDto);
-	  return "login";
+		 model.addAttribute("user", userDto);
+		 return "login";
 	 }
 
 	 @GetMapping("/register")
@@ -52,25 +52,29 @@ public class UserController {
 	 }
 
 	 @PostMapping("/register")
-	 public String registerSava(@ModelAttribute("user") UserDto userDto, Model model) {
-	  User user = userService.findByUsername(userDto.getUsername());
-	  if (user != null) {
-	   model.addAttribute("Userexist", user);
+	 public String registerUser(@ModelAttribute("user") UserDto userDto, Model model) {
+	  User existingUser = userService.findByUsername(userDto.getUsername());
+	  if (existingUser != null) {
+	   model.addAttribute("UserExist", "User already exists.");
 	   return "register";
 	  }
-	  userService.save(userDto);
+//	    if (userDto.isEmailVerified() == null) {
+//	        userDto.setEmailVerified(false); // Set default value if null
+//	    }
+	  userService.registerUser(userDto);
 	  return "redirect:/register?success";
 	 }
 	 
 	  @GetMapping("/confirm")
-	  public String confirmAccount(@RequestParam("token") String token) {
-	      boolean confirmed = userService.confirmUser(token);
+	  public String confirmAccount(@RequestParam("token") String token, Model model) {
+	      Boolean confirmed = userService.confirmUser(token);
 
 	      if (confirmed) {
-	          return "Account successfully confirmed. You can now log in.";
+	          model.addAttribute("message", "Account successfully confirmed. You can now log in.");
 	      } else {
-	          return "Confirmation failed. Invalid token.";
+	          model.addAttribute("message", "Confirmation failed. Invalid token.");
 	      }
+	      return "confirmationResult";
 	  }
 	
 /*	@RequestMapping(value = "", method = RequestMethod.GET)

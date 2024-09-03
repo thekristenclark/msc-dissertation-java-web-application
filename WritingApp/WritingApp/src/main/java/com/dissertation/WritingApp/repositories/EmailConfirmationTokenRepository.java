@@ -1,4 +1,4 @@
-// repo that interacts with the Mongodb
+// provides the repo that interacts with the Mongodb for the EmailConfirmationToken entity
 
 package com.dissertation.WritingApp.repositories;
 

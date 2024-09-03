@@ -22,7 +22,6 @@ public class CustomUserDetailsService implements UserDetailsService {
     // Constructor-based injection
  //   @Autowired
     public CustomUserDetailsService(UserRepository userRepository) {
-        super();
     	this.userRepository = userRepository;
     }
     

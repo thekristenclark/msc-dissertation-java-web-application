@@ -1,3 +1,5 @@
+// implements userservice interface with logic for user registration, confirmation, and interaction with user repo
+
 package com.dissertation.WritingApp.service.impl;
 
 import java.nio.charset.Charset;
@@ -18,6 +20,7 @@ import com.dissertation.WritingApp.dtos.UserDto;
 import com.dissertation.WritingApp.models.EmailConfirmationToken;
 import com.dissertation.WritingApp.repositories.EmailConfirmationTokenRepository;
 import com.dissertation.WritingApp.repositories.UserRepository;
+import com.dissertation.WritingApp.service.EmailService;
 import com.dissertation.WritingApp.service.UserService;
 
 import jakarta.mail.MessagingException;
@@ -27,21 +30,19 @@ import jakarta.mail.internet.MimeMessage;
 @Service
 public class UserServiceImpl implements UserService{
 	
+	 private final PasswordEncoder passwordEncoder;
+	 private final UserRepository userRepository;
+	 private final EmailConfirmationTokenRepository emailConfirmationTokenRepository;
+	 private final JavaMailSender mailSender;
+	 private final EmailService emailService;
+	 
 	 @Autowired
-	 PasswordEncoder passwordEncoder;
-
-	 private UserRepository userRepository;
-	 private EmailConfirmationTokenRepository emailConfirmationTokenRepository;
-	 
-	 private JavaMailSender mailSender;
-	 
-
-	 public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, JavaMailSender mailSender, EmailConfirmationTokenRepository emailConfirmationTokenRepository) {
-	  super();
+	 public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, JavaMailSender mailSender, EmailConfirmationTokenRepository emailConfirmationTokenRepository, EmailService emailService) {
 	  this.userRepository = userRepository;
+	  this.passwordEncoder = passwordEncoder;
 	  this.mailSender = mailSender;
 	  this.emailConfirmationTokenRepository = emailConfirmationTokenRepository;
-	  this.passwordEncoder = passwordEncoder;
+	  this.emailService = emailService;
 	 }
 
 	 @Override
@@ -50,15 +51,62 @@ public class UserServiceImpl implements UserService{
 	 }
 
 //	 @Override
+//	 public User save(UserDto userDto) {
+//	  User user = new User(
+//			  userDto.getUserId(),
+//			  userDto.getUsername(),
+//			  passwordEncoder.encode(userDto.getPassword()),
+//			  userDto.getFullname(),
+//			  userDto.getEmail(),
+//			  userDto.isEmailVerified(),
+//			  userDto.getVerificationToken());
+//	  return userRepository.save(user);
+//	 }
+//	 
+//	 
+//	 public void registerUser(UserDto userDto) {
+//		    // Create a new User object from UserDto
+//		    User user = new User();
+//		    user.setUsername(userDto.getUsername());
+//		    user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+//		    user.setFullname(userDto.getFullname());
+//		    user.setEmail(userDto.getEmail());
+//		    user.setEmailVerified(false); // Default to false
+//		    user.setVerificationToken(UUID.randomUUID().toString()); // Generate a token
+//
+//		    // Save the user to the database
+//		    userRepository.save(user);
+//
+//		    // Send confirmation email
+//		    sendConfirmationEmail(user);
+//		}
+	 
+//	 @Override
 	 public User save(UserDto userDto) {
-	  User user = new User(userDto.getUserId(), userDto.getUsername(), passwordEncoder.encode(userDto.getPassword()),userDto.getFullname(), userDto.getEmail());
+	  User user = new User(
+			  userDto.getUserId(),
+			  userDto.getUsername(),
+			  passwordEncoder.encode(userDto.getPassword()),
+			  userDto.getFullname(),
+			  userDto.getEmail(),
+			  false,
+			  UUID.randomUUID().toString());
 	  return userRepository.save(user);
 	 }
 	 
 	 
-	    @Override
-	    public void registerUser(User user) {
-	        user.setEnabled(false); // User is not enabled until they confirm their email
+	 public void registerUser(UserDto userDto) {
+	        // Convert UserDto to User entity and set additional fields
+	        User user = new User(
+	            null,
+	            userDto.getUsername(),
+	            passwordEncoder.encode(userDto.getPassword()),
+	            userDto.getFullname(),
+	            userDto.getEmail(),
+	            false, // Email is not verified
+	            UUID.randomUUID().toString() // Generate a verification token
+	        );
+	        // Save the user to the database
 	        userRepository.save(user);
 
 	        // Send confirmation email
@@ -66,36 +114,24 @@ public class UserServiceImpl implements UserService{
 	    }
 
 	    private void sendConfirmationEmail(User user) {
-	        String token = UUID.randomUUID().toString(); // Generate a random confirmation token
+	       // String token = UUID.randomUUID().toString(); // Generate a random confirmation token
 	        
 	        // Save token in the database
 	        EmailConfirmationToken emailConfirmationToken = new EmailConfirmationToken();
-	        emailConfirmationToken.setToken(token);
+	        emailConfirmationToken.setToken(user.getVerificationToken());
 	        emailConfirmationToken.setUser(user);
 	        emailConfirmationToken.setTimeStamp(LocalDateTime.now());
 	        emailConfirmationToken.setExpiresAt(LocalDateTime.now().plusHours(24)); // Token validity for 24 hours
 	        emailConfirmationTokenRepository.save(emailConfirmationToken);
 
-	        String confirmationUrl = "http://localhost:8080/auth/confirm?token=" + token;
+	        String confirmationUrl = "http://localhost:8080/auth/confirm?token=" + user.getVerificationToken();
 
-	        MimeMessage message = mailSender.createMimeMessage();
-	        MimeMessageHelper helper = new MimeMessageHelper(message);
-
-	        try {
-	            helper.setTo(user.getEmail());
-	            helper.setText("Click the link to confirm your registration: " + confirmationUrl);
-	            helper.setSubject("Registration Confirmation");
-	            helper.setFrom(new InternetAddress("noreply@yourdomain.com"));
-	            mailSender.send(message);
-	        } catch (MessagingException e) {
-	            e.printStackTrace();
-	        }
-
-	        // In a real implementation, save the token associated with the user
+	        // Use EmailService to send the email
+	        emailService.sendConfirmationEmail(user.getEmail(), confirmationUrl);
 	    }
 
-	    @Override
-	    public boolean confirmUser(String token) {
+	    
+	    public Boolean confirmUser(String token) {
 	        // Look up the user by the token in a real application
 	        EmailConfirmationToken emailConfirmationToken = emailConfirmationTokenRepository.findByToken(token);
 	        
@@ -105,7 +141,7 @@ public class UserServiceImpl implements UserService{
 	        }
 	        
 	        User user = emailConfirmationToken.getUser();
-	        user.setEnabled(true); // Activate the user account
+	        user.setEmailVerified(true); // Activate the user account
 	        userRepository.save(user);
 
 	        // Token is used, so mark it as confirmed
@@ -114,6 +150,20 @@ public class UserServiceImpl implements UserService{
 	        
 	        return true;
 	    }
+	    
+	    public Boolean verifyEmail(String token) {
+	        User user = userRepository.findByVerificationToken(token);
+	        if (user != null && !user.isEmailVerified()) {
+	            user.setEmailVerified(true);
+	            user.setVerificationToken(null);
+	            userRepository.save(user);
+	            return true;
+	        }
+	        return false;
+	    }
+
+
+
 
 	
 }

@@ -16,18 +16,23 @@ public class User {
     private Set<UserRole> userRoles;
     private String fullname;
     private String email;
-    private boolean enabled = false; // To track email confirmation
+    private Boolean emailVerified; // To track email confirmation
+	private String verificationToken;
     
-    public User(ObjectId userId, String username, String password, String fullname, String email) {
+    public User(ObjectId userId, String username, String password, String fullname, String email, Boolean emailVerified, String verificationToken) {
     	super();
     	this.userId = userId;
     	this.username = username;
     	this.password = password;
     	this.fullname = fullname;
     	this.email = email;
+    	this.emailVerified = emailVerified;
+    	this.verificationToken = verificationToken;
 
     }
 
+    public User() {}
+    
 	public ObjectId getUserId() {
         return userId;
     }
@@ -75,12 +80,20 @@ public class User {
 		this.email = email;
 	}
 
-	public boolean isEnabled() {
-		return enabled;
+    public Boolean isEmailVerified() {
+		return emailVerified;
 	}
 
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
+	public void setEmailVerified(boolean emailVerified) {
+		this.emailVerified = emailVerified;
+	}
+
+	public String getVerificationToken() {
+		return verificationToken;
+	}
+
+	public void setVerificationToken(String verificationToken) {
+		this.verificationToken = verificationToken;
 	}
 
 	@Override

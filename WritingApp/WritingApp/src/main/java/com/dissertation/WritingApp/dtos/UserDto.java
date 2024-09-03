@@ -12,14 +12,18 @@ public class UserDto {
 	private String password;
 	private String fullname;
 	private String email;
+    private Boolean emailVerified; 
+	private String verificationToken;
 	
-	 public UserDto(ObjectId userId, String username, String password, String fullname, String email) {
+	 public UserDto(ObjectId userId, String username, String password, String fullname, String email, Boolean emailVerified, String verificationToken) {
 		  super();
 		  this.userId = userId;
 		  this.username = username;
 		  this.password = password;
 		  this.fullname = fullname;
 		  this.email = email;
+		  this.emailVerified = emailVerified;
+		  this.verificationToken = verificationToken;
 	 }
 	
 	public ObjectId getUserId() {
@@ -56,6 +60,22 @@ public class UserDto {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+    public Boolean isEmailVerified() {
+		return emailVerified;
+	}
+
+	public void setEmailVerified(Boolean emailVerified) {
+		this.emailVerified = emailVerified;
+	}
+
+	public String getVerificationToken() {
+		return verificationToken;
+	}
+
+	public void setVerificationToken(String verificationToken) {
+		this.verificationToken = verificationToken;
 	}
 
 	@Override

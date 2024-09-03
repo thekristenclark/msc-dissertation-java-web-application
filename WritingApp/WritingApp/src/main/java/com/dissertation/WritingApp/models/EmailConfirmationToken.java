@@ -1,4 +1,4 @@
-// entity that stores the email confirmation token
+// email confirmation entity that stores the email confirmation token stored in the mongodb
 
 package com.dissertation.WritingApp.models;
 
@@ -12,6 +12,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.dissertation.WritingApp.domain.User;
+import com.dissertation.WritingApp.dtos.UserDto;
 
 
 //@Data

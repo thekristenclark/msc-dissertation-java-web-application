@@ -4,6 +4,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
 import com.dissertation.WritingApp.domain.User;
+import com.dissertation.WritingApp.dtos.UserDto;
 
 public interface UserRepository extends MongoRepository<User, String> {
 
@@ -11,4 +12,7 @@ public interface UserRepository extends MongoRepository<User, String> {
     User findUserByUsername(String username);
     
     User findByEmail(String email);
+    
+    User findByVerificationToken(String token);
+
 }
