@@ -11,13 +11,15 @@ public class CustomUserDetails implements UserDetails{
 	 private String password;
 	 private Collection<? extends GrantedAuthority> authorities;
 	 private String fullname;
+	 private Boolean emailVerified;
 
 	 
-	 public CustomUserDetails(String username, String password, Collection<? extends GrantedAuthority> authorities, String fullname) {
+	 public CustomUserDetails(String username, String password, Collection<? extends GrantedAuthority> authorities, String fullname, Boolean emailVerified) {
 		 this.username = username;
 		 this.password = password;
 		 this.authorities = authorities;
 		 this.fullname = fullname;
+		 this.emailVerified = emailVerified;
 	}
 
 	public String getFullname() {
@@ -56,6 +58,6 @@ public class CustomUserDetails implements UserDetails{
 
 	@Override
 	public boolean isEnabled() {
-		return true;
+		return emailVerified;	// only enable account if email is verified
 	}
 }

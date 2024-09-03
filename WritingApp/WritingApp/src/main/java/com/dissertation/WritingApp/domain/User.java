@@ -16,10 +16,10 @@ public class User {
     private Set<UserRole> userRoles;
     private String fullname;
     private String email;
-    private Boolean emailVerified; // To track email confirmation
+    private boolean emailVerified; // To track email confirmation
 	private String verificationToken;
     
-    public User(ObjectId userId, String username, String password, String fullname, String email, Boolean emailVerified, String verificationToken) {
+    public User(ObjectId userId, String username, String password, String fullname, String email, boolean emailVerified, String verificationToken) {
     	super();
     	this.userId = userId;
     	this.username = username;
@@ -80,11 +80,12 @@ public class User {
 		this.email = email;
 	}
 
-    public Boolean isEmailVerified() {
-		return emailVerified;
+    public boolean isEmailVerified() {
+//		return emailVerified != null && emailVerified;
+    	return emailVerified;
 	}
 
-	public void setEmailVerified(boolean emailVerified) {
+	public void setEmailVerified(Boolean emailVerified) {
 		this.emailVerified = emailVerified;
 	}
 

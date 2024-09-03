@@ -5,6 +5,7 @@ package com.dissertation.WritingApp.controllers;
 import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.dissertation.WritingApp.domain.User;
+import com.dissertation.WritingApp.service.InvalidTokenException;
 import com.dissertation.WritingApp.service.UserService;
 import com.dissertation.WritingApp.dtos.UserDto;
 
@@ -64,38 +66,18 @@ public class UserController {
 	  userService.registerUser(userDto);
 	  return "redirect:/register?success";
 	 }
-	 
-	  @GetMapping("/confirm")
-	  public String confirmAccount(@RequestParam("token") String token, Model model) {
-	      Boolean confirmed = userService.confirmUser(token);
 
-	      if (confirmed) {
-	          model.addAttribute("message", "Account successfully confirmed. You can now log in.");
-	      } else {
-	          model.addAttribute("message", "Confirmation failed. Invalid token.");
-	      }
-	      return "confirmationResult";
-	  }
-	
-/*	@RequestMapping(value = "", method = RequestMethod.GET)
-	public List<User> getAllUsers() {
-		LOG.info("Getting all users.");
-		return userRepository.findAll();
-	}
-	
-	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public User addNewUsers(@RequestBody User user) {
-		LOG.info("Saving user.");
-		return userRepository.save(user);
-	}
-	
-	@RequestMapping(value = "/settings/{userId}", method = RequestMethod.GET)
-	public Object getAllUserSettings(@PathVariable String username) {
-		User user = userRepository.findUserByUsername(username);
-		if (user != null) {
-			return user.getUsername();
-		} else {
-			return "User not found.";
-		}
-	} */
+	 
+	 @GetMapping("/email-confirmation")
+	 public String confirmEmail(@RequestParam("token") String token, Model model) {
+	     boolean isVerified = userService.verifyEmail(token); // Implement verifyEmail in your service
+	     
+	     if (isVerified) {
+	         model.addAttribute("message", "Your email has been successfully verified.");
+	     } else {
+	         model.addAttribute("message", "The verification link is invalid or has expired.");
+	     }
+	     
+	     return "email-confirmation"; // Return the name of the view template
+	 }
 }

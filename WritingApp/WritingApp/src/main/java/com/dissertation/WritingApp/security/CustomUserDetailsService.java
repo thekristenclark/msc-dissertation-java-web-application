@@ -17,14 +17,15 @@ import com.dissertation.WritingApp.repositories.UserRepository;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     // Constructor-based injection
- //   @Autowired
+    @Autowired
     public CustomUserDetailsService(UserRepository userRepository) {
     	this.userRepository = userRepository;
     }
-    
+   
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
          User user = userRepository.findUserByUsername(username);
 //                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
@@ -33,8 +34,19 @@ public class CustomUserDetailsService implements UserDetailsService {
         	 throw new UsernameNotFoundException("No user has been found. Please try again.");
      
          } 
-         
-         return new CustomUserDetails(user.getUsername(), user.getPassword(), authorities(), user.getFullname());
+         if (!user.isEmailVerified()) {
+             throw new UsernameNotFoundException("Email not verified");
+         }
+//         return org.springframework.security.core.userdetails.User.builder()
+//                 .username(user.getUsername())
+//                 .password(user.getPassword())
+//                 .authorities(user.getAuthorities())
+//                 .accountExpired(false)
+//                 .accountLocked(false)
+//                 .credentialsExpired(false)
+//                 .disabled(false)
+//                 .build();
+         return new CustomUserDetails(user.getUsername(), user.getPassword(), authorities(), user.getFullname(), user.isEmailVerified());
     }
     
     public Collection<? extends GrantedAuthority> authorities() {

@@ -34,6 +34,7 @@ public class SecurityConfig {
     	http.csrf().disable()
         .authorizeHttpRequests()
             .requestMatchers("/register").permitAll()
+            .requestMatchers("/email-confirmation").permitAll() // Whitelist /confirm-email endpoint
             .requestMatchers("/home").authenticated()
 			.requestMatchers("/editor").authenticated()	// requires auth to access editor page
         .and()

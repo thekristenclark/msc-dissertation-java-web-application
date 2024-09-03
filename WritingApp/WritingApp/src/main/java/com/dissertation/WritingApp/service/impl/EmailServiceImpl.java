@@ -18,57 +18,25 @@ import jakarta.mail.internet.MimeMessage;
 public class EmailServiceImpl implements EmailService {
 
     private final JavaMailSender sender;
-    
- //   @Autowired
- //   private EmailService emailService;
 
     public EmailServiceImpl(JavaMailSender sender) {
         this.sender = sender;
     }
 
-//    @Override
-//    public void sendConfirmationEmail(String to, String token) {
-//        //MIME - HTML message
-//        MimeMessage message = sender.createMimeMessage();
-//        MimeMessageHelper helper = new MimeMessageHelper(message, true);
-//        helper.setTo(emailConfirmationToken.getUser().getUsername());
-//        helper.setSubject("Confirm your E-Mail - MFA Application Registration");
-//        helper.setText("<html>" +
-//                        "<body>" +
-//                        "<h2>Dear "+ emailConfirmationToken.getUser().getFullname() + ",</h2>"
-//                        + "<br/> We're excited to have you get started. " +
-//                        "Please click on below link to confirm your account."
-//                        + "<br/> "  + generateConfirmationLink(emailConfirmationToken.getToken())+"" +
-//                        "<br/> Regards,<br/>" +
-//                        "MFA Registration team" +
-//                        "</body>" +
-//                        "</html>"
-//                , true);
-//
-//        sender.send(message);
-//    }
     
     @Override
-    public void sendConfirmationEmail(String to, String token) {
-        String subject = "Please verify your email address";
-        String message = "Click the link below to verify your email address:\n"
-                        + "http://localhost:8080/confirm?token=" + token;
-
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setTo(to);
-        mailMessage.setSubject(subject);
-        mailMessage.setText(message);
-
+    public void sendConfirmationEmail(String to, String subject, String body) {
         try {
-            sender.send(mailMessage);
-            System.out.println("Email sent to: " + to);
+            MimeMessage message = sender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true); // true = multipart
+
+            helper.setTo(to);
+            helper.setSubject(subject);
+            helper.setText(body, true); // true = HTML
+
+            sender.send(message);
         } catch (Exception e) {
-            e.printStackTrace();
-            System.err.println("Failed to send email to: " + to);
+            e.printStackTrace(); // Handle exceptions as needed
         }
     }
-
-//    private String generateConfirmationLink(String token){
-//        return "<a href=http://localhost:8080/confirm-email?token="+token+">Confirm Email</a>";
-//    }
 }

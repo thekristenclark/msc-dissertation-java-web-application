@@ -3,6 +3,7 @@
 package com.dissertation.WritingApp.models;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
@@ -22,16 +23,13 @@ public class EmailConfirmationToken {
     private String id;
     @Indexed
     private String token;
+    private User user;
 
 	@CreatedDate
     @ReadOnlyProperty
     private LocalDateTime timeStamp;
 	private LocalDateTime expiresAt;
 	private LocalDateTime confirmedAt;
-
-
-	@DBRef
-    private User user;
     
 	public User getUser() {
 		return user;
@@ -68,7 +66,9 @@ public class EmailConfirmationToken {
 		this.confirmedAt = confirmedAt;
 	}
 
-
+	public static String generateToken() {
+		return UUID.randomUUID().toString();
+	}
 
 }
 
