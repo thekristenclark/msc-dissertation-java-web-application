@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
@@ -80,16 +79,16 @@
 			 </div>
 		 </header>
 		 
-    <div class="form-container">
-    
-      
-		<form action="#" th:action="@{/editor}" th:object="${editor}" method="post" id="kform">
+    <div class="form-container">      
+		<form id="kform" action="#" th:action="@{/editor}" th:object="${editor}" method="post">
+	
  	    	<input type="hidden" id="userId" name="userId" th:field="*{userId}" /> <!-- hidden field for User ID -->
           
             <!--  Quill Editor -->
 			<div>
 					<p><label for="charNotes-editor">Character Notes:</label></p>
 					<div id="charNotes-toolbar">
+					<!-- Quill Toolbar buttons -->
 						<span class="ql-formats">
 			    			<select class="ql-font"></select>
 			    			<select class="ql-size"></select>
@@ -142,6 +141,7 @@
 			<div>
 					<p><label for="story-editor">Story Editor:</label></p>
 					<div id="story-toolbar">
+						<!-- Quill toolbar Buttons -->
 						<span class="ql-formats">
 			    			<select class="ql-font"></select>
 			    			<select class="ql-size"></select>
@@ -189,39 +189,29 @@
 					<div id="story-editor" style="height:200px;"></div>
 					<input type="hidden" id="story" name="story" th:field="*{story}" />
 				</div>
+            <br>
 
-            <!-- Hidden field for GoJS diagram data -->
-            <input type="hidden" id="diagramData" name="diagramData">
+           <!-- Hidden field for GoJS diagram data -->
+           <input type="hidden" id="diagramData" name="diagramData" th:field="*{diagramData}">
+            
 
 			<div id="myPaletteDIV"></div>
 			<div id="myDiagramDIV"></div>
 
-            <div style="clear:both;margin-top: 20px;">
+         	<div style="clear:both;margin-top: 20px;">
                 <input type="submit" value="Submit">
             </div>
 
         </form>
+        
     </div>
 
-    <script>    
-    
-  function init() {
+    <script>   
+function init() {
 
     myDiagram = new go.Diagram('myDiagramDIV', {
       'undoManager.isEnabled': true // enable undo & redo
       
-    });
-
-    // when the document is modified, add a "*" to the title and enable the "Save" button
-    myDiagram.addDiagramListener('Modified', (e) => {
-      const button = document.getElementById('SaveButton');
-      if (button) button.disabled = !myDiagram.isModified;
-      const idx = document.title.indexOf('*');
-      if (myDiagram.isModified) {
-        if (idx < 0) document.title += '*';
-      } else {
-        if (idx >= 0) document.title = document.title.slice(0, idx);
-      }
     });
 
     // set up some colors/fonts for the default ('light') and dark Themes
@@ -323,11 +313,29 @@
       new go.Node('Auto')
         .apply(nodeStyle)
         .add(
+          new go.Shape('Conditional', { fromLinkable: true, toLinkable: true }).apply(shapeStyle).theme('fill', 'conditional'),
+          new go.TextBlock({
+            margin: 8,
+            maxSize: new go.Size(160, NaN),
+            wrap: go.Wrap.Fit,
+            textAlign: 'center',
+            editable: true
+          })
+            .apply(textStyle)
+            .bindTwoWay('text')
+        )
+    );
+
+    myDiagram.nodeTemplateMap.add(
+      'Start',
+      new go.Node('Auto')
+        .apply(nodeStyle)
+        .add(
           new go.Shape('Capsule', { fromLinkable: true }).apply(shapeStyle).theme('fill', 'start'),
           new go.TextBlock('Start', { margin: new go.Margin(5, 6) }).apply(textStyle).bind('text')
         )
     );
-
+    
     myDiagram.nodeTemplateMap.add(
       'End',
       new go.Node('Auto')
@@ -418,6 +426,16 @@
     myDiagram.toolManager.linkingTool.temporaryLink.routing = go.Routing.Orthogonal;
     myDiagram.toolManager.relinkingTool.temporaryLink.routing = go.Routing.Orthogonal;
 
+
+    // Load the JSON data from the hidden input field
+    const diagramDataInput = document.getElementById('diagramData');
+    if (diagramDataInput) {
+      const diagramData = JSON.parse(diagramDataInput.value);
+      myDiagram.model = go.Model.fromJson(diagramData);
+    }
+
+
+
     // initialize the Palette that is on the left side of the page
     myPalette = new go.Palette('myPaletteDIV', {
       nodeTemplateMap: myDiagram.nodeTemplateMap, // share the templates used by myDiagram
@@ -449,7 +467,7 @@
       return geo;
     });
 
-    // taken from ../extensions/Figures.js:
+    // taken from https://unpkg.com/create-gojs-kit@3.0.9/dist/extensions/Figures.js:
     go.Shape.defineFigureGenerator('File', (shape, w, h) => {
       const geo = new go.Geometry();
       const fig = new go.PathFigure(0, 0, true); // starting point
@@ -476,9 +494,8 @@
     }
   }
   
-
   window.addEventListener('DOMContentLoaded', () => {
-    
+  
     			// intialize quill editors
 			const charNotesQuill = new Quill('#charNotes-editor', {
 		    	modules: {
@@ -495,37 +512,39 @@
 		      	},
 		    	theme: 'snow',
 		    });
-		  	
-		  	// Populate Quill editors and diagram with initial content
+		    
+		    // Populate Quill editors and diagram with initial content
 			const charNotesContent = document.querySelector('#charNotes').value; 
 			const storyContent = document.querySelector('#story').value;
-			const diagramContent = document.querySelector('#diagramData').value; // Changed from '#diagram.JSON'
-		   
+			
 			if (charNotesContent) {
                 charNotesQuill.root.innerHTML = charNotesContent;
             }
             if (storyContent) {
                 storyQuill.root.innerHTML = storyContent;
             }
-			if (diagramContent) {
-      			myDiagram.model = go.Model.fromJson(diagramContent);
-			}
-		  	
-		  	// Save Quill content to hidden fields on form submission
-		  	document.querySelector('form').onsubmit = () => {
+
+			document.querySelector('#kform').onsubmit = () => {
             	document.querySelector('#charNotes').value = charNotesQuill.root.innerHTML;
                 document.querySelector('#story').value = storyQuill.root.innerHTML;
-      			document.querySelector('#diagramData').value = myDiagram.model.toJson();
-            };
-    
+                
+                // Save the diagram data
+        		const diagramData = myDiagram.model.toJson();
+        		document.getElementById('diagramData').value = diagramData;
+              }
+
+  
     // setTimeout only to ensure font is loaded before loading diagram
     // you may want to use an asset loading library for this
     // to keep this sample simple, it does not
     setTimeout(() => {
       init();
     }, 300);
-  });
+  }); 
   
-    </script>
+
+
+</script>
+
 </body>
 </html>
