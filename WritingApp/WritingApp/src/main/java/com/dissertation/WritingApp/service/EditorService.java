@@ -1,5 +1,7 @@
 package com.dissertation.WritingApp.service;
 
+import java.util.List;
+
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,17 +10,18 @@ import com.dissertation.WritingApp.models.Editor;
 import com.dissertation.WritingApp.repositories.EditorRepository;
 
 @Service
-public class EditorService {
+public interface EditorService {
 
-    @Autowired
-    private EditorRepository editorRepository;
-
-    public Editor saveEditor(Editor editor) {
-        return editorRepository.save(editor);
-    }
+    Editor saveEditor(Editor editor);
     
-    public Editor findLatestEditorByUserId(ObjectId userId) {
-        return editorRepository.findByUserIdOrderByCreateDateDesc(userId);
-    }
+    // fetch the latest editor
+    Editor findLatestEditorByUserId(ObjectId userId);
+    
+    // fetch all editors for a User
+    List<Editor> findAllEditorsByUserId(ObjectId objectId);
+
+	Editor findEditorByStoryId(String storyId);
+	
+	List<Editor> findEditorsByUserId(String userId);
 
 }

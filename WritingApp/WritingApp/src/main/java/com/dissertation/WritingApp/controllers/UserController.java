@@ -34,12 +34,12 @@ public class UserController {
 		this.userDetailsService = userDetailsService;
 	}
 	
-	 @GetMapping("/home")
-	 public String home(Model model, Principal principal) {
-	  UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
-	  model.addAttribute("userdetail", userDetails);
-	  return "home";
-	 }
+//	 @GetMapping("/home")
+//	 public String home(Model model, Principal principal) {
+//	  UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
+//	  model.addAttribute("userdetail", userDetails);
+//	  return "home";
+//	 }
 	
 	 @GetMapping("/login")
 	 public String login(Model model, UserDto userDto) {

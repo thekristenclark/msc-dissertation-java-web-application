@@ -9,13 +9,13 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
 @Document
 public class Editor {
 	
-	private @MongoId ObjectId userId;
+	private ObjectId userId;
 	private String charNotes;
 	private String story;
 	private LocalDateTime createDate;
 	private String diagramData; // stores the gojs json data
 	private String storyTitle;
-	private String storyId;
+	private @MongoId String storyId;
 	
 
 	public Editor() {}

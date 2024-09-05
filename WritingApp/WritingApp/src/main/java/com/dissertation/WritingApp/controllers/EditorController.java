@@ -28,8 +28,8 @@ public class EditorController {
     private UserService userService;
 
     // Display the editor form for the currently logged-in user.
-    @GetMapping("/editor")
-    public String showCreateEditorForm(Model model) {
+    @GetMapping("/editor-new")
+    public String showCreateNewEditorForm(Model model) {
     	
         // Retrieve the current user's username
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -38,12 +38,8 @@ public class EditorController {
         // Fetch the User object based on the username
         User user = userService.findByUsername(username);
         if (user != null) {
-            // Find the latest Editor entry or create new
-            Editor editor = editorService.findLatestEditorByUserId(user.getUserId());
-            
-            // if editor is null, initialize with default values
-            if (editor == null) {
-          	editor = new Editor();
+
+          	Editor editor = new Editor();
             	editor.setUserId(user.getUserId());
             	editor.setStoryTitle("Enter story title");
             	// set default values for charNotes, story, and diagramData
@@ -92,7 +88,7 @@ public class EditorController {
                 String storyId = UUID.randomUUID().toString();
                 editor.setStoryId(storyId);
                 System.out.println("The generated Id is: " + storyId);
- //               model.addAttribute("editor", editor);
+                model.addAttribute("editor", editor);
                 
 //            	editor.setDiagramData("{ \"class\": \"GraphLinksModel\", \"nodeDataArray\": [...], \"linkDataArray\": [...] }"); // default diagram data
 //            	
@@ -100,12 +96,12 @@ public class EditorController {
 //            } else {
 //            	
 //           
-            }             
+//            }             
             
             // add attributes to the model
-            model.addAttribute("userId", user.getUserId().toString());
-            model.addAttribute("storyTitle", editor.getStoryTitle());
-            model.addAttribute("editor", editor != null ? editor : new Editor());
+//            model.addAttribute("userId", user.getUserId().toString());
+//            model.addAttribute("storyTitle", editor.getStoryTitle());
+//            model.addAttribute("editor", editor != null ? editor : new Editor());
 //            model.addAttribute("charNotes", editor.getCharNotes());
 //            model.addAttribute("story", editor.getStory());
 //            model.addAttribute("diagramData", editor.getDiagramData());
@@ -116,6 +112,49 @@ public class EditorController {
         
         return "editor";
     }
+    
+    @GetMapping("/editor")
+    public String showEditorForm(@RequestParam(value = "id", required = false) String storyId, Model model) {
+        if (storyId != null && !storyId.isEmpty()) {
+            Editor editor = editorService.findEditorByStoryId(storyId);
+
+            if (editor != null) {
+                model.addAttribute("editor", editor);
+                return "editor";
+            } else {
+                model.addAttribute("error", "Editor not found");
+                return "error"; // or redirect to an error page
+            }
+        } else {
+            model.addAttribute("error", "Invalid story ID");
+            return "error"; // or redirect to an error page
+        }
+    }
+    
+    
+ // Display the editor form for an existing editor.
+//    @GetMapping("/editor")
+//    public String showEditEditorForm(@RequestParam(value = "id", required = false) String storyId, Model model) {
+//        // Retrieve the current user's username
+//        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+//        User user = userService.findByUsername(username);
+//
+//        if (user != null) {
+//            Editor editor = editorService.findEditorByStoryId(storyId);
+//
+//            if (editor != null) {
+//                model.addAttribute("editor", editor);
+//            } else {
+//                model.addAttribute("error", "Editor not found");
+//            }
+//
+//        } else {
+//            model.addAttribute("error", "User not found");
+//        }
+//
+//        return "editor";
+//    }
+       
 
     // submission of the editor form
     @PostMapping("/editor")
@@ -130,7 +169,9 @@ public class EditorController {
         User user = userService.findByUsername(username);
         if (user != null) {
         	
-        	editor.setStoryId(storyId);  // Set the storyId here
+        	Editor existingEditor = editorService.findEditorByStoryId(storyId);
+        	
+//        	editor.setStoryId(storyId);  // Set the storyId here
         	
             // Print out the current and updated values for debugging
             System.out.println("Current diagramData: " + editor.getDiagramData());

@@ -50,20 +50,16 @@
   </div>
  </div>
  
- <!-- creates a new story form -->
-  <div class="form-container">
-  <h1>My Bookshelf:</h1>
-  <form id="createStoryForm" method="post" action="/stories/create">
-    <label for="title">Story Title:</label><br>
-    <input type="text" id="title" name="title" required><br><br>
-    <input type="submit" value="Create Story">
-  </form>
- </div>
- 
- <br><br>
- <a href="/editor">
-  <button>Write a New Story</button>
-</a>
+
+	<button onclick="window.location.href='/editor-new'">Write a New Story</button>
+
+  <h2>My Bookshelf:</h2>
+    <ul>
+	    <li th:each="editor : ${editors}">
+	            <a th:href="@{/editor(id=${editor.storyId})}" th:text="${editor.storyTitle}">Story Title</a>
+	            
+	        </li>
+    </ul>
 
 </body>
 

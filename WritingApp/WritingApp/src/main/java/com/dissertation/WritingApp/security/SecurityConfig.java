@@ -37,6 +37,8 @@ public class SecurityConfig {
             .requestMatchers("/email-confirmation").permitAll() // Whitelist /confirm-email endpoint
             .requestMatchers("/home").authenticated()
 			.requestMatchers("/editor").authenticated()	// requires auth to access editor page
+            .requestMatchers("/editor-new").authenticated()
+            .requestMatchers("/editor/**").authenticated() // Ensure that other endpoints are protected
         .and()
         .formLogin()
             .loginPage("/login")
