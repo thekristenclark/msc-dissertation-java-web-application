@@ -50,9 +50,19 @@
   </div>
  </div>
  
+ <!-- creates a new story form -->
+  <div class="form-container">
+  <h1>My Bookshelf:</h1>
+  <form id="createStoryForm" method="post" action="/stories/create">
+    <label for="title">Story Title:</label><br>
+    <input type="text" id="title" name="title" required><br><br>
+    <input type="submit" value="Create Story">
+  </form>
+ </div>
+ 
  <br><br>
  <a href="/editor">
-  <button>Write a Story!</button>
+  <button>Write a New Story</button>
 </a>
 
 </body>

@@ -82,7 +82,13 @@
     <div class="form-container">      
 		<form id="kform" action="#" th:action="@{/editor}" th:object="${editor}" method="post">
 	
+			<input type="hidden" id="storyId" name="storyId" value="${storyId}"/>
  	    	<input type="hidden" id="userId" name="userId" th:field="*{userId}" /> <!-- hidden field for User ID -->
+ 	    	
+ 	    	<div>
+ 	    		<label for="storyTitle">Title: </label>
+ 	    		<input type="text" id="storyTitle" name="storyTitle" th:field="*{storyTitle}"/>
+ 	    	</div>	
           
             <!--  Quill Editor -->
 			<div>
@@ -133,7 +139,7 @@
 							<button class="ql-clean"></button>
 						</span>
 					</div>
-					<div id="charNotes-editor" style="height:200px;"></div>
+					<div id="charNotes-editor" style="height:300px;"></div>
 		 			<input type="hidden" id="charNotes" name="charNotes" th:field="*{charNotes}" />
 				</div>
             
@@ -186,7 +192,7 @@
 							<button class="ql-clean"></button>
 						</span>
 					</div>
-					<div id="story-editor" style="height:200px;"></div>
+					<div id="story-editor" style="height:500px;"></div>
 					<input type="hidden" id="story" name="story" th:field="*{story}" />
 				</div>
             <br>
@@ -523,6 +529,7 @@ function init() {
             if (storyContent) {
                 storyQuill.root.innerHTML = storyContent;
             }
+				
 
 			document.querySelector('#kform').onsubmit = () => {
             	document.querySelector('#charNotes').value = charNotesQuill.root.innerHTML;

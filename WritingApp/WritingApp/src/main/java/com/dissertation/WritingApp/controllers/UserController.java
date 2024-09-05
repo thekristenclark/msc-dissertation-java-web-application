@@ -80,4 +80,5 @@ public class UserController {
 	     
 	     return "email-confirmation"; // Return the name of the view template
 	 }
+
 }
