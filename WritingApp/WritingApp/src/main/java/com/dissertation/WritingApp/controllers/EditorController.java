@@ -1,6 +1,7 @@
 package com.dissertation.WritingApp.controllers;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -37,7 +38,7 @@ public class EditorController {
         // Fetch the User object based on the username
         User user = userService.findByUsername(username);
         if (user != null) {
-            // Find the latest Edkitor entry or create new
+            // Find the latest Editor entry or create new
             Editor editor = editorService.findLatestEditorByUserId(user.getUserId());
             
             // if editor is null, initialize with default values
@@ -86,6 +87,13 @@ public class EditorController {
                         "{\"from\":-10,\"to\":-15}" +
                         "]}";
             	editor.setDiagramData(defaultDiagramData);
+            	
+                // Generate a unique ID for the form
+                String storyId = UUID.randomUUID().toString();
+                editor.setStoryId(storyId);
+                System.out.println("The generated Id is: " + storyId);
+ //               model.addAttribute("editor", editor);
+                
 //            	editor.setDiagramData("{ \"class\": \"GraphLinksModel\", \"nodeDataArray\": [...], \"linkDataArray\": [...] }"); // default diagram data
 //            	
 //            	model.addAttribute("editor", editor");
@@ -96,7 +104,7 @@ public class EditorController {
             
             // add attributes to the model
             model.addAttribute("userId", user.getUserId().toString());
-            model.addAttribute("ktitle", editor.getStoryTitle());
+            model.addAttribute("storyTitle", editor.getStoryTitle());
             model.addAttribute("editor", editor != null ? editor : new Editor());
 //            model.addAttribute("charNotes", editor.getCharNotes());
 //            model.addAttribute("story", editor.getStory());
@@ -111,14 +119,18 @@ public class EditorController {
 
     // submission of the editor form
     @PostMapping("/editor")
-    public String submitEditorForm(@ModelAttribute Editor editor, @RequestParam("diagramData") String diagramData, @RequestParam("charNotes") String charNotes, @RequestParam("story") String story, String storyTitle, Model model) {
+    public String submitEditorForm(@ModelAttribute Editor editor, @RequestParam ("storyId") String storyId, @RequestParam("diagramData") String diagramData, @RequestParam("charNotes") String charNotes, @RequestParam("story") String story, String storyTitle, Model model) {
         
     	// Retrieve the current user's username
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         
+        System.out.println("Story Id: " + storyId);
+        
         // Fetch the User object based on the username
         User user = userService.findByUsername(username);
         if (user != null) {
+        	
+        	editor.setStoryId(storyId);  // Set the storyId here
         	
             // Print out the current and updated values for debugging
             System.out.println("Current diagramData: " + editor.getDiagramData());
@@ -132,6 +144,8 @@ public class EditorController {
             
             System.out.println("Curent Story Title: " + editor.getStoryTitle());
             System.out.println("Updated Story Title: " + storyTitle);
+            
+            System.out.println("Submitted storyId: " + storyId);  // Check the UUID valu
 
             // If editor exists, update its fields
             if (editor != null) {

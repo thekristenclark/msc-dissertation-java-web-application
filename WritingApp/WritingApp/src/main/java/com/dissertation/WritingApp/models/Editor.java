@@ -15,12 +15,12 @@ public class Editor {
 	private LocalDateTime createDate;
 	private String diagramData; // stores the gojs json data
 	private String storyTitle;
-//	private ObjectId storyId;
+	private String storyId;
 	
 
 	public Editor() {}
 	
-	public Editor(ObjectId userId, String charNotes, String story, LocalDateTime createDate, String diagramData, String storyTitle) {
+	public Editor(ObjectId userId, String charNotes, String story, LocalDateTime createDate, String diagramData, String storyTitle, String storyId) {
 		super();
 		this.userId=userId;
 		this.charNotes=charNotes;
@@ -28,7 +28,7 @@ public class Editor {
 		this.createDate=createDate;
 		this.diagramData=diagramData;
 		this.storyTitle = storyTitle;
-//		this.storyId = storyId;
+		this.storyId = storyId;
 	}
 
 	// getters and setters
@@ -81,13 +81,13 @@ public class Editor {
 	}
 
 
-//	public ObjectId getStoryId() {
-//		return storyId;
-//	}
-//
-//	public void setStoryId(ObjectId storyId) {
-//		this.storyId = storyId;
-//	}
+	public String getStoryId() {
+		return storyId;
+	}
+
+	public void setStoryId(String storyId) {
+		this.storyId = storyId;
+	}
 
 //	@Override
 //	public String toString() {

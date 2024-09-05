@@ -82,7 +82,7 @@
     <div class="form-container">      
 		<form id="kform" action="#" th:action="@{/editor}" th:object="${editor}" method="post">
 	
-			<input type="hidden" id="storyId" name="storyId" value="${storyId}"/>
+			<input type="hidden" id="storyId" name="storyId" th:field="*{storyId}"/>
  	    	<input type="hidden" id="userId" name="userId" th:field="*{userId}" /> <!-- hidden field for User ID -->
  	    	
  	    	<div>
