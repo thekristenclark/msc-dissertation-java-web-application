@@ -33,6 +33,10 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     	http.csrf().disable()
         .authorizeHttpRequests()
+        	.requestMatchers("/writeSimply").permitAll()
+        	.requestMatchers("/assets/**", "/css/**", "/js/**", "/images/**").permitAll() // Allow static resources
+        	.requestMatchers("/left-sidebar", "/right-sidebar", "/no-sidebar").permitAll()
+        	.requestMatchers("/assets/**", "/css/**", "/js/**", "/images/**").permitAll() // Allow static resources
             .requestMatchers("/register").permitAll()
             .requestMatchers("/email-confirmation").permitAll() // Whitelist /confirm-email endpoint
             .requestMatchers("/home").authenticated()

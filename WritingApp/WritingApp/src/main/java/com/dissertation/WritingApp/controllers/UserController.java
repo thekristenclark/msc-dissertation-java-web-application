@@ -41,6 +41,26 @@ public class UserController {
 //	  return "home";
 //	 }
 	
+	@GetMapping("/writeSimply")
+	public String landing(Model model) {
+		return "writeSimply";
+	}
+	
+	@GetMapping("/left-sidebar")
+	public String leftSidebar(Model model) {
+		return "left-sidebar";
+	}
+	
+	@GetMapping("/right-sidebar")
+	public String rightSidebar(Model model) {
+		return "right-sidebar";
+	}
+	
+	@GetMapping("/no-sidebar")
+	public String noSidebar(Model model) {
+		return "no-sidebar";
+	}
+	
 	 @GetMapping("/login")
 	 public String login(Model model, UserDto userDto) {
 		 model.addAttribute("user", userDto);
