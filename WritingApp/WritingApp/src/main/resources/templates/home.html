@@ -18,39 +18,38 @@
 			<!-- Header -->
 				<div id="header-wrapper">
 					<div id="header" class="container">
-						<div id="header" class="container">
 
 							<!-- Logo -->
 								<h1 id="logo"><a th:href="@{/home}">Write Simply</a></h1>
 	
 							<!-- Nav -->
-								<nav id="nav">
-									<ul>
-										<li>
-											<a href="#">Bookshelf</a>
-											<ul>
-												<li><a href="#">Lorem ipsum dolor</a></li>
-												<li><a href="#">Magna phasellus</a></li>
-												<li><a href="#">Etiam dolore nisl</a></li>
-												<li>
-													<a href="#">Phasellus consequat</a>
-													<ul>
-														<li><a href="#">Lorem ipsum dolor</a></li>
-														<li><a href="#">Phasellus consequat</a></li>
-														<li><a href="#">Magna phasellus</a></li>
-														<li><a href="#">Etiam dolore nisl</a></li>
-													</ul>
-												</li>
-												<li><a href="#">Veroeros feugiat</a></li>
-											</ul>
-										</li>
-										<li><a href="#"></a></li>
-										<li class="break"><a th:href="@{/logout}">Logout</a></li>
-										<li><a th:href="@{/home}">Home</a></li>
-									</ul>
-								</nav>
+							<nav id="nav">
+								<ul>
+									<li>
+										<a href="#">Bookshelf</a>
+										<ul>
+											<li><a href="#">Lorem ipsum dolor</a></li>
+											<li><a href="#">Magna phasellus</a></li>
+											<li><a href="#">Etiam dolore nisl</a></li>
+											<li>
+												<a href="#">Phasellus consequat</a>
+												<ul>
+													<li><a href="#">Lorem ipsum dolor</a></li>
+													<li><a href="#">Phasellus consequat</a></li>
+													<li><a href="#">Magna phasellus</a></li>
+													<li><a href="#">Etiam dolore nisl</a></li>
+												</ul>
+											</li>
+											<li><a href="#">Veroeros feugiat</a></li>
+										</ul>
+									</li>
+									<li><a th:href="@{/home}">Home</a></li>
+									<li class="break"><a th:href="@{/logout}">Logout</a></li>
+									<li><a onclick="window.location.href='/editor-new'" class="button">New Story</a></li>
+								</ul>
+							</nav>
 	
-						</div>
+					</div>
 	
 						<!-- Hero -->
 							<section id="hero" class="container">
@@ -62,7 +61,6 @@
 									<li><a onclick="window.location.href='/editor-new'" class="button">Write a New Story</a></li>
 								</ul>
 							</section>
-					</div>
 				</div>
 
 			<!-- Bookshelf -->
@@ -80,6 +78,7 @@
 						        </li>
 				            </ul>
 				        </div>
+				        <br>
 				        <br>
 				        <br>
 				</div>

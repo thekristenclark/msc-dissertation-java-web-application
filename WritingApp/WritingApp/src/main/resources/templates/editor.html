@@ -70,7 +70,7 @@
     </style>
 </head>
 
-<body>
+<body class="no-sidebar is-preload">
 
 		<div id="page-wrapper">
 
@@ -78,10 +78,10 @@
 				<div id="header-wrapper">
 					<div id="header" class="container">
 
-						<!-- Logo -->
-							<h1 id="logo"><a th:href="@{/home}">Write Simply</a></h1>
-
-						<!-- Nav -->
+							<!-- Logo -->
+								<h1 id="logo"><a th:href="@{/home}">Write Simply</a></h1>
+	
+							<!-- Nav -->
 							<nav id="nav">
 								<ul>
 									<li>
@@ -102,11 +102,12 @@
 											<li><a href="#">Veroeros feugiat</a></li>
 										</ul>
 									</li>
-									<li class="break"><a th:href="@{/logout}">Logout</a></li>
 									<li><a th:href="@{/home}">Home</a></li>
+									<li class="break"><a th:href="@{/logout}">Logout</a></li>
+									<li><a onclick="window.location.href='/editor-new'" class="button">New Story</a></li>
 								</ul>
 							</nav>
-
+	
 					</div>
 				</div>
 
@@ -117,9 +118,10 @@
 						<!-- Content -->
 							<article id="content">
 								<header>
-									<h2>Login:</h2>
-									<p>Please sign in to your account below.</p>
+									<h2>Story Editor:</h2>
 								</header>
+							</article>
+					
 
 		 
     <div class="form-container">      
@@ -188,8 +190,10 @@
 				</div>
             
             <br>
+               	            
             <!-- Quill Story Editor -->
 			<div>
+			<br>
 					<p><label for="story-editor">Story Editor:</label></p>
 					<div id="story-toolbar">
 						<!-- Quill toolbar Buttons -->
@@ -241,16 +245,21 @@
 					<input type="hidden" id="story" name="story" th:field="*{story}" />
 				</div>
             <br>
+            
+             <!-- Hidden field for GoJS diagram data -->
+            <div>
+           		<label for="storyTitle">Plot Diagram: </label>
+           		<input type="hidden" id="diagramData" name="diagramData" th:field="*{diagramData}">
+           		
+           		           	<div id="myPaletteDIV"></div>
+				<div id="myDiagramDIV"></div>
+           	
+           	<br>
+           		
+           	</div>
 
-           <!-- Hidden field for GoJS diagram data -->
-           <input type="hidden" id="diagramData" name="diagramData" th:field="*{diagramData}">
-           <br> 
-
-			<div id="myPaletteDIV"></div>
-			<div id="myDiagramDIV"></div>
-
-			<br>
          	<div style="clear:both;margin-top: 20px;">
+         	<br>
                 <input type="submit" value="Save">
             </div>
 
@@ -262,6 +271,8 @@
      			<!-- Footer -->
 				<div id="footer-wrapper">
 				</div>
+				</div>
+</div>
 
     <script>   
 function init() {
@@ -600,9 +611,8 @@ function init() {
     }, 300);
   }); 
   
-
-
 </script>
 
 </body>
+
 </html>

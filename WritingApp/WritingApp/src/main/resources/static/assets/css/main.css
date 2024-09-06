@@ -2176,7 +2176,8 @@ input, select, textarea {
 
 			#nav > ul > li {
 				display: inline-block;
-				margin-left: 1em;
+				justify-content: space-evenly;
+				margin-left: 0em;
 			}
 
 				#nav > ul > li > ul {
