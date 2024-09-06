@@ -54,7 +54,7 @@ public class SecurityConfig {
             .invalidateHttpSession(true)
             .clearAuthentication(true)
             .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-            .logoutSuccessUrl("/login?logout")
+            .logoutSuccessUrl("/writeSimply")
             .permitAll();
 //    	.sessionManagement(sessionManagement -> 
 //    		sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)

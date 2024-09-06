@@ -1,11 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-		<title>Login</title>
+		<title>Home1 Page</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" th:href="@{/assets/css/main.css}" />
+
+	    <!-- Link to bookshelf CSS file -->
+	    <link rel="stylesheet" th:href="@{/assets/css/bookshelf.css}"/>
+		
 	</head>
 	<body class="register is-preload">
 		<div id="page-wrapper">
@@ -39,8 +43,8 @@
 										</ul>
 									</li>
 									<li><a th:href="@{/register}">Register</a></li>
-									<li class="break"><a th:href="@{/login}">Login</a></li>
-									<li><a href="#"></a></li>
+									<li class="break"><a th:href="@{/logout}">Logout</a></li>
+									<li><a th:href="@{/no-sidebar}">No Sidebar</a></li>
 								</ul>
 							</nav>
 
@@ -54,51 +58,27 @@
 						<!-- Content -->
 							<article id="content">
 								<header>
-									<h2>Login:</h2>
-									<p>Please sign in to your account below.</p>
+									<h2>Welcome, <span th:text="${userdetail.fullname}" class="dashboard_user_name">User</span></h2>
 								</header>
 								
-  <div class="form-container">
 
-   <div th:if="${param.error}">
-    <div class="error-message">
-     <p>Invalid Username or Password. Please try again.</p>
+    <div class="main-content">
+        <button class="new-story-button" onclick="window.location.href='/editor-new'">Write a New Story</button>
+
+        <div class="bookshelf">
+            <h2>My Bookshelf:</h2>
+            <ul>
+	            <li th:each="editor : ${editors}" class="book-item">
+		        	<a th:href="@{/editor(id=${editor.storyId})}" class="button book-icon" th:text="${editor.storyTitle}">Story Title</a>
+		        </li>
+            </ul>
+        </div>
     </div>
-   </div>
-
-   <div th:if="${param.logout}">
-	    <div class="logout-message">
-	     <p>Logout Successful!</p>
-	    </div>
-   </div>
-
-   <form th:action="@{/login}" method="post" role="form" th:object="${user}">
-
-    <label for="username">Username:</label>
-    <input th:field="*{username}" type="text" id="username" name="username"
-     placeholder="Enter your Username" required>
-
-    <label for="password">Password:</label>
-    <input th:field="*{password}" type="password" id="password" name="password"
-     placeholder="Enter your Password" required>
-
-	<br>
-    <button type="submit">Login</button>
-   </form>
-   <br>
-   <p class="form-footer">Don't have an account? <a th:href="@{/register}">Register</a> here.</p>
-  </div>
- 
-  </article>
- </div>
- </div>
- 
- 			<!-- Footer -->
-				<div id="footer-wrapper">
-				</div>
- 
- </div>
- 
+    
+	</div>
+	</div>
+	</div>
+    
 </body>
 
 </html>

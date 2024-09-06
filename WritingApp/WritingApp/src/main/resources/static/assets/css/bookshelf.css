@@ -1,0 +1,78 @@
+.new-story-button {
+	background-color: #f76b8f;
+	border: none;
+	color: #fff;
+	padding: 15px 30px;
+	font-size: 1.25em;;
+	cursor: pointer;
+	border-radius: 5px;
+	transition: background-color 0.3s;
+	margin-bottom: 20px;
+	}
+
+.new-story-button:hover {
+	background-color: #ecb299;
+	color: #ffffff;	/* Change text color to white on hover */
+}
+
+.bookshelf {
+    margin-top: 20px;
+}
+
+.book-item {
+    flex: 1 1 200px; /* Set the base size of the rectangular icon */
+    display: flex;
+    justify-content: center;
+}
+
+.book-icon {
+    display: block;
+    padding: 20px;
+    background-color: #007bff; /* Adjust color as needed */
+    font-family: Source Sans Pro', sans-serif;
+    font-size: 14pt;
+    font-weight: 300;
+	line-height: 1.75em;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.bookshelf h2 {
+	font-size: 22px;
+	color: #52575c;
+	margin-bottom: 15px;
+	text-align: center;
+	margin-top: 0;
+}
+
+.bookshelf ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.bookshelf li {
+	margin: 10px;
+}
+
+.bookshelf a {
+	display: block;
+	text-decoration: none;
+	color: #fff;
+	background-color: #f76b8f;
+	padding: 20px;
+	font-size: 18px;
+	text-align: center;
+	width: 200px;
+	transition: background-color 0.3s;
+}
+
+.book-icon:hover {
+    background-color: #ecb299; /* Darker shade on hover */
+    color: #ffffff;	/* Change text color to white on hover */
+}

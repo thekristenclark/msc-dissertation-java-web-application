@@ -2,117 +2,111 @@
 <html>
 
 <head>
- <meta charset="UTF-8">
- <title>Registration</title>
- <style>
-  body {
-   font-family: 'Arial', sans-serif;
-   margin: 0;
-   padding: 0;
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   height: 100vh;
-   background-color: #5926db;
-  }
+		<title>Register</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" th:href="@{/assets/css/main.css}" />
+	</head>
+	<body class="register is-preload">
+		<div id="page-wrapper">
 
-  .form-container {
-   background-color: #fff;
-   width: 400px;
-   padding: 20px;
-   border-radius: 8px;
-   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
+			<!-- Header -->
+				<div id="header-wrapper">
+					<div id="header" class="container">
 
-  h2 {
-   color: #5926db;
-   text-align: center;
-   margin-bottom: 20px;
-  }
+						<!-- Logo -->
+							<h1 id="logo"><a th:href="@{/writeSimply}">Write Simply</a></h1>
 
-  label {
-   display: block;
-   margin-bottom: 8px;
-   color: #5926db;
-  }
+						<!-- Nav -->
+							<nav id="nav">
+								<ul>
+									<li>
+										<a href="#">Bookshelf</a>
+										<ul>
+											<li><a href="#">Lorem ipsum dolor</a></li>
+											<li><a href="#">Magna phasellus</a></li>
+											<li><a href="#">Etiam dolore nisl</a></li>
+											<li>
+												<a href="#">Phasellus consequat</a>
+												<ul>
+													<li><a href="#">Lorem ipsum dolor</a></li>
+													<li><a href="#">Phasellus consequat</a></li>
+													<li><a href="#">Magna phasellus</a></li>
+													<li><a href="#">Etiam dolore nisl</a></li>
+												</ul>
+											</li>
+											<li><a href="#">Veroeros feugiat</a></li>
+										</ul>
+									</li>
+									<li><a th:href="@{/register}">Register</a></li>
+									<li class="break"><a th:href="@{/login}">Login</a></li>
+									<li><a href="#"></a></li>
+								</ul>
+							</nav>
 
-  input {
-   width: 100%;
-   padding: 8px;
-   margin-bottom: 16px;
-   border: 1px solid #ccc;
-   border-radius: 4px;
-   box-sizing: border-box;
-  }
+					</div>
+				</div>
+				
+			<!-- Main -->
+				<div class="wrapper">
+					<div class="container" id="main">
 
-  button {
-   background-color: #5926db;
-   color: #fff;
-   padding: 10px 20px;
-   border: none;
-   border-radius: 4px;
-   cursor: pointer;
-   font-weight: bold;
-   transition: background-color 0.3s;
-  }
-
-  button:hover {
-   background-color: #299d00;
-  }
-
-  .form-footer {
-   text-align: center;
-   margin-top: 20px;
-   color: #888;
-  }
-
-  .success-message {
-   background-color: #5926db;
-   color: #fff;
-   padding: 10px;
-   border-radius: 3px;
-   text-align: center;
-  }
- </style>
-</head>
-
-<body>
+						<!-- Content -->
+							<article id="content">
+								<header>
+									<h2>Create an Account:</h2>
+									<p>Register below to create your Write Simply account.</p>
+								</header>
+				
  <div class="form-container">
-
-  <div th:if="${param.success}">
-   <div class="success-message">
-    <p>Registration Successful! Please Check your email to verify your account.</p>
-   </div>
-  </div>
-
-  <h2>Registration</h2>
-  <form th:action="@{/register}" method="post" role="form" th:object="${user}">
-
-   <label for="fullname">Full Name:</label>
-   <input th:field="*{fullname}" type="text" id="fullname" name="fullname" placeholder="Please enter your full name..."
-    required>
-
-   <label for="username">Username:</label>
-   <input th:field="*{username}" type="text" id="username" name="username" placeholder="Please create a Username..."
-    required>
-
-   <label for="password">Password:</label>
-   <input th:field="*{password}" type="password" id="password" name="password"
-    placeholder="Please create a Password..." required>
-    
-    <label for="email">Email:</label>
-    <input th:field="*{email}" type="email" id="email" name="email" placeholder="Please enter your email."
-    required>
-
-   <button type="submit">Register</button>
-  </form>
-  <div>
-   <span th:if="${Userexist}" style="color: red;">This username is already taken.</span>
-  </div>
-  <div>
-   <span class="form-footer">Already have an account? <a th:href="@{/login1}">Login</a> here.</span>
-  </div>
+		
+		  <div th:if="${param.success}">
+		   <div class="success-message">
+		    <p>Registration Successful! Please Check your email to verify your account.</p>
+		   </div>
+		  </div>
+		
+		  <h2>Registration:</h2>
+		  <form th:action="@{/register}" method="post" role="form" th:object="${user}">
+		
+			<br>
+		   <label for="fullname">First Name:</label>
+		   <input th:field="*{fullname}" type="text" id="fullname" name="fullname" placeholder="Please enter your name..."
+		    required>
+		
+		   <label for="username">Username:</label>
+		   <input th:field="*{username}" type="text" id="username" name="username" placeholder="Please create a Username..."
+		    required>
+		
+		   <label for="password">Password:</label>
+		   <input th:field="*{password}" type="password" id="password" name="password"
+		    placeholder="Please create a Password..." required>
+		    
+		    <label for="email">Email:</label>
+		    <input th:field="*{email}" type="email" id="email" name="email" placeholder="Please enter your email..."
+		    required>
+			<br>
+		   <button type="submit">Register</button>
+		  </form>
+		  <br>
+		  <div>
+		   <span th:if="${Userexist}" style="color: red;">This username is already taken.</span>
+		  </div>
+		  <div>
+		   <span class="form-footer">Already have an account? <a th:href="@{/login}">Login</a> here.</span>
+		  </div>
  </div>
+ 
+ </article>
+ </div>
+ </div>
+ 
+ 			<!-- Footer -->
+				<div id="footer-wrapper">
+				</div>
+ 
+ </div>
+ 
 </body>
 
 </html>
