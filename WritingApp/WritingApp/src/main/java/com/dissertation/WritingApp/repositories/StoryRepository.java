@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import com.dissertation.WritingApp.models.Story;
+import com.dissertation.WritingApp.domain.Story;
 
 public interface StoryRepository extends MongoRepository<Story, Long>{
 

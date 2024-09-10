@@ -64,7 +64,7 @@
 	display: block;
 	text-decoration: none;
 	color: #fff;
-	background-color: #f76b8f;
+	background-color: #ecb299;
 	padding: 20px;
 	font-size: 18px;
 	text-align: center;
@@ -73,6 +73,6 @@
 }
 
 .book-icon:hover {
-    background-color: #ecb299; /* Darker shade on hover */
+    background-color: #f76b8f; /* Darker shade on hover */
     color: #ffffff;	/* Change text color to white on hover */
 }

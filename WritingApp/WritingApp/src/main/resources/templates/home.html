@@ -74,7 +74,9 @@
 				        <div class="bookshelf">
 				            <ul>
 					            <li th:each="editor : ${editors}" class="book-item">
-						        	<a th:href="@{/editor(id=${editor.storyId})}" class="button book-icon" th:text="${editor.storyTitle}">Story Title</a>
+						        	<a th:href="@{/editor(id=${editor.storyId})}"
+						        	class="button book-icon"
+						        	th:text="${editor.storyTitle}">Story Title</a>
 						        </li>
 				            </ul>
 				        </div>

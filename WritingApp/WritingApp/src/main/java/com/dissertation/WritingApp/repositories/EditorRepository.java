@@ -7,7 +7,7 @@ import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
-import com.dissertation.WritingApp.models.Editor;
+import com.dissertation.WritingApp.domain.Editor;
 
 @Repository
 public interface EditorRepository extends MongoRepository<Editor, String> {

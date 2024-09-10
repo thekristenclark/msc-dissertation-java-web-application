@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.dissertation.WritingApp.models.Story;
+import com.dissertation.WritingApp.domain.Story;
 
 @Service
 public interface StoryService {

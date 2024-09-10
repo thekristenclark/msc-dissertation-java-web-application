@@ -1,6 +1,6 @@
 // entity
 
-package com.dissertation.WritingApp.models;
+package com.dissertation.WritingApp.domain;
 
 import java.time.LocalDateTime;
 

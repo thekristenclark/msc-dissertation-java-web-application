@@ -7,7 +7,7 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.dissertation.WritingApp.models.Editor;
+import com.dissertation.WritingApp.domain.Editor;
 import com.dissertation.WritingApp.repositories.EditorRepository;
 import com.dissertation.WritingApp.service.EditorService;
 

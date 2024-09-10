@@ -9,7 +9,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.dissertation.WritingApp.models.Story;
+import com.dissertation.WritingApp.domain.Story;
 import com.dissertation.WritingApp.repositories.StoryRepository;
 import com.dissertation.WritingApp.service.StoryService;
 

@@ -1,4 +1,4 @@
-package  com.dissertation.WritingApp.models;
+package  com.dissertation.WritingApp.domain;
 
 import java.time.LocalDateTime;
 
@@ -16,11 +16,12 @@ public class Editor {
 	private String diagramData; // stores the gojs json data
 	private String storyTitle;
 	private @MongoId String storyId;
+	private String charMapData;
 	
 
 	public Editor() {}
 	
-	public Editor(ObjectId userId, String charNotes, String story, LocalDateTime createDate, String diagramData, String storyTitle, String storyId) {
+	public Editor(ObjectId userId, String charNotes, String story, LocalDateTime createDate, String diagramData, String storyTitle, String storyId, String charMapData) {
 		super();
 		this.userId=userId;
 		this.charNotes=charNotes;
@@ -29,6 +30,7 @@ public class Editor {
 		this.diagramData=diagramData;
 		this.storyTitle = storyTitle;
 		this.storyId = storyId;
+		this.charMapData = charMapData;
 	}
 
 	// getters and setters
@@ -88,9 +90,12 @@ public class Editor {
 	public void setStoryId(String storyId) {
 		this.storyId = storyId;
 	}
+	
+	public String getCharMapData() {
+		return charMapData;
+	}
 
-//	@Override
-//	public String toString() {
-//        return String.format("Editor[id=%s, userId=%s, idea=%s, summary=%s, createDate=%s, plotMapData=%s]", 
-//                userId, userId, idea, summary, createDate, plotMapData);	}	
+	public void setCharMapData(String charMapData) {
+		this.charMapData = charMapData;
+	}
 }

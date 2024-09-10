@@ -18,6 +18,10 @@
 		<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
 		<script src="https://unpkg.com/gojs/release/go.js"></script>
+		
+		<!-- vis.js character map script -->
+		<script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+		
     <style>
 			body {
 			   background-color: #f5f5f5;
@@ -52,7 +56,7 @@
 				}
 			}
         #myDiagramDIV {
-            width: 60%;
+            width: 90%;
             height: 400px;
             border: solid 1px black;
             float: left;
@@ -66,6 +70,11 @@
         .form-container {
             clear: both;
             margin-bottom: 20px;
+        }
+        #mynetwork {
+            width: 80%x;
+            height: 400px;
+            border: 1px solid lightgray;
         }
     </style>
 </head>
@@ -128,7 +137,7 @@
 		<form id="kform" action="#" th:action="@{/editor}" th:object="${editor}" method="post">
 	
 			<input type="hidden" id="storyId" name="storyId" th:field="*{storyId}"/>
- 	    	<input type="hidden" id="userId" name="userId" th:field="*{userId}" /> <!-- hidden field for User ID -->
+ 	    	<input type="hidden" id="userId" name="userId" th:field="*{userId}" /> 							<!-- hidden field for User ID -->
  	    	
  	    	<div>
  	    		<label for="storyTitle">Title: </label>
@@ -248,14 +257,36 @@
             
              <!-- Hidden field for GoJS diagram data -->
             <div>
-           		<label for="storyTitle">Plot Diagram: </label>
+           		<label for="diagramData">Plot Diagram: </label>
            		<input type="hidden" id="diagramData" name="diagramData" th:field="*{diagramData}">
            		
            		           	<div id="myPaletteDIV"></div>
 				<div id="myDiagramDIV"></div>
-           	
-           	<br>
+           		<br>
+           		<br>
+           		<br>
+           		<br>
+           		<br>
+           		<br>
+           		<br>
+           		<br>
+           		<br>
+           		<br>
+           		<br>
+           		<br>
+           		<br>
+           		<br>
+           		<br>
+           	</div>
+
+           	<!-- Hidden field for vis.js Character Map data -->
+            <div>
+            	<br>
+           		<label for="charMapData">Character Relationship Map: </label>
+           		<input type="hidden" id="charMapData" name="charMapData" th:field="*{charMapData}">
            		
+				<div id="mynetwork"></div>
+
            	</div>
 
          	<div style="clear:both;margin-top: 20px;">
@@ -562,6 +593,12 @@ function init() {
     }
   }
   
+
+
+  
+  
+  let nodes, edges;
+  
   window.addEventListener('DOMContentLoaded', () => {
   
     			// intialize quill editors
@@ -581,7 +618,7 @@ function init() {
 		    	theme: 'snow',
 		    });
 		    
-		    // Populate Quill editors and diagram with initial content
+		    // Populate Quill editors and diagram with content
 			const charNotesContent = document.querySelector('#charNotes').value; 
 			const storyContent = document.querySelector('#story').value;
 			
@@ -591,16 +628,70 @@ function init() {
             if (storyContent) {
                 storyQuill.root.innerHTML = storyContent;
             }
+
+
+
+			// Initialize vis.js network
+		    var nodes = new vis.DataSet([
+		        { id: 1, label: 'Main Character' }
+		    ]);
+		    var edges = new vis.DataSet();
+		
+		    var container = document.getElementById('mynetwork');
+		    var data = { nodes: nodes, edges: edges };
+		    var options = {
+		        manipulation: {
+		            enabled: true,
+		            addNode: function(nodeData, callback) {
+		                nodeData.label = prompt('Enter character name:') || 'New Trait';
+		                callback(nodeData);
+		            },
+		            editNode: function(nodeData, callback) {
+		                nodeData.label = prompt('Edit character name:', nodeData.label);
+		                callback(nodeData);
+		            }
+		        },
+		        interaction: {
+		            dragNodes: true,
+		            dragView: true,
+		            zoomView: true,
+		            selectable: true,
+		            multiselect: true,
+		        }
+		    };
+		    var network = new vis.Network(container, data, options);
+		
+		    // Populate Character Map data from the hidden input field
+		    var charMapDataInput = document.getElementById('charMapData');
+		    if (charMapDataInput && charMapDataInput.value) {
+		        var charMapData = JSON.parse(charMapDataInput.value);
+
+                nodes.add(data.nodes);
+                edges.add(data.edges);
+                network.redraw(); // Redraw the network with the loaded data
+		    }
 				
 
 			document.querySelector('#kform').onsubmit = () => {
+				// Save Quill Data
             	document.querySelector('#charNotes').value = charNotesQuill.root.innerHTML;
                 document.querySelector('#story').value = storyQuill.root.innerHTML;
                 
-                // Save the diagram data
+                // Save the Plot Diagram Data
         		const diagramData = myDiagram.model.toJson();
         		document.getElementById('diagramData').value = diagramData;
-              }
+        		
+        		// Save the Character Map Data
+        		const charMapData = {
+        			nodes: nodes.get(mynetwork),
+        			edges: edges.get(mynetwork)
+    			};
+		        const charMapField = document.getElementById('charMapData');
+		        charMapField.value = JSON.stringify(charMapData);
+				document.getElementById('charMapData').value = charMapField.value;
+		
+		        console.log('charMapData:', charMapField.value); // Log it before submission
+              };
 
   
     // setTimeout only to ensure font is loaded before loading diagram
@@ -612,6 +703,7 @@ function init() {
   }); 
   
 </script>
+
 
 </body>
 

@@ -12,11 +12,23 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.dissertation.WritingApp.domain.Editor;
 import com.dissertation.WritingApp.domain.User;
-import com.dissertation.WritingApp.models.Editor;
-
 import com.dissertation.WritingApp.service.EditorService;
 import com.dissertation.WritingApp.service.UserService;
+
+/**
+ * Controller responsible for operations related to the Editor feature within the application.
+ * Allows users to create, view, and update stories through the editor form.
+ * Key functionalities include:
+ * - Displaying a new editor form for story creation.
+ * - Retrieving and displaying an existing editor form based on a story ID.
+ * - Submitting and saving editor data, including story content, character notes, and diagram data.
+ * 
+ * The controller interacts with the currently authenticated user, ensuring that each story is associated 
+ * with a specific user account. It also manages default values and data structures for new editor instances 
+ * and handles form submissions for story updates.
+ */
 
 @Controller
 public class EditorController {
@@ -37,21 +49,21 @@ public class EditorController {
         
         // Fetch the User object based on the username
         User user = userService.findByUsername(username);
+        
         if (user != null) {
-
           	Editor editor = new Editor();
+          		// Create a new editor instance with default values
             	editor.setUserId(user.getUserId());
             	editor.setStoryTitle("Enter story title");
-            	// set default values for charNotes, story, and diagramData
             	editor.setCharNotes("Write your character notes here!");
             	editor.setStory("Write your story here!");
             	
-            	// Set default diagram data if the editor is new
+            	// Set default diagram data for a new editor
             	String defaultDiagramData = "{ \"class\": \"GraphLinksModel\", " +
                         "\"nodeDataArray\": [" +
                         "{\"key\":-1,\"category\":\"Start\",\"loc\":\"-237 41\",\"text\":\"Start\"}," +
                         "{\"key\":-2,\"category\":\"End\",\"loc\":\"277 696\",\"text\":\"End\"}," +
-                        "{\"category\":\"Conditional\",\"text\":\"Is data\\ntree-like?\",\"key\":-14,\"loc\":\"40 165\"}," +
+                        "{\"category\":\"Conditional\",\"text\":\"Critical\\nchoice\",\"key\":-14,\"loc\":\"40 165\"}," +
                         "{\"text\":\"Stasis\",\"key\":-5,\"loc\":\"-100 230\"}," +
                         "{\"text\":\"Trigger\",\"key\":-6,\"loc\":\"180 230\"}," +
                         "{\"category\":\"Comment\",\"text\":\"GraphLinksModel\\nalso allows Groups\",\"key\":-7,\"loc\":\"362 230\"}," +
@@ -71,18 +83,18 @@ public class EditorController {
                         "{\"from\":-5,\"to\":-13}," +
                         "{\"from\":-6,\"to\":-12}," +
                         "{\"from\":-15,\"to\":-2}," +
-                        "{\"from\":-14,\"to\":-5,\"text\":\"Yes\"}," +
-                        "{\"from\":-14,\"to\":-6,\"text\":\"No\"}," +
+                        "{\"from\":-14,\"to\":-5,\"text\":\"choice one\"}," +
+                        "{\"from\":-14,\"to\":-6,\"text\":\"choice 2\"}," +
                         "{\"from\":-9,\"to\":-14}," +
                         "{\"from\":-13,\"to\":-16}," +
                         "{\"from\":-12,\"to\":-16}," +
-                        "{\"from\":-16,\"to\":-18,\"text\":\"Yes\"}," +
-                        "{\"from\":-16,\"to\":-17,\"text\":\"No\"}," +
+                        "{\"from\":-16,\"to\":-18,\"text\":\"Redemption\"}," +
+                        "{\"from\":-16,\"to\":-17,\"text\":\"Fall\"}," +
                         "{\"from\":-18,\"to\":-10}," +
                         "{\"from\":-17,\"to\":-10}," +
                         "{\"from\":-10,\"to\":-15}" +
                         "]}";
-            	editor.setDiagramData(defaultDiagramData);
+            	editor.setDiagramData(defaultDiagramData);            	
             	
                 // Generate a unique ID for the form
                 String storyId = UUID.randomUUID().toString();
@@ -90,22 +102,6 @@ public class EditorController {
                 System.out.println("The generated Id is: " + storyId);
                 model.addAttribute("editor", editor);
                 
-//            	editor.setDiagramData("{ \"class\": \"GraphLinksModel\", \"nodeDataArray\": [...], \"linkDataArray\": [...] }"); // default diagram data
-//            	
-//            	model.addAttribute("editor", editor");
-//            } else {
-//            	
-//           
-//            }             
-            
-            // add attributes to the model
-//            model.addAttribute("userId", user.getUserId().toString());
-//            model.addAttribute("storyTitle", editor.getStoryTitle());
-//            model.addAttribute("editor", editor != null ? editor : new Editor());
-//            model.addAttribute("charNotes", editor.getCharNotes());
-//            model.addAttribute("story", editor.getStory());
-//            model.addAttribute("diagramData", editor.getDiagramData());
-                  //      model.addAttribute("diagramData", editor != null ? editor.getDiagramData() : "");
         } else {
             model.addAttribute("error", "User not found");
         }
@@ -113,9 +109,10 @@ public class EditorController {
         return "editor";
     }
     
+    // Display the form to edit an existing editor by Story ID
     @GetMapping("/editor")
     public String showEditorForm(@RequestParam(value = "id", required = false) String storyId, Model model) {
-        if (storyId != null && !storyId.isEmpty()) {
+        if (storyId != null && !storyId.isEmpty()) {	// fetch editor by story ID
             Editor editor = editorService.findEditorByStoryId(storyId);
 
             if (editor != null) {
@@ -129,36 +126,14 @@ public class EditorController {
             model.addAttribute("error", "Invalid story ID");
             return "error"; // or redirect to an error page
         }
-    }
-    
-    
- // Display the editor form for an existing editor.
-//    @GetMapping("/editor")
-//    public String showEditEditorForm(@RequestParam(value = "id", required = false) String storyId, Model model) {
-//        // Retrieve the current user's username
-//        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-//        User user = userService.findByUsername(username);
-//
-//        if (user != null) {
-//            Editor editor = editorService.findEditorByStoryId(storyId);
-//
-//            if (editor != null) {
-//                model.addAttribute("editor", editor);
-//            } else {
-//                model.addAttribute("error", "Editor not found");
-//            }
-//
-//        } else {
-//            model.addAttribute("error", "User not found");
-//        }
-//
-//        return "editor";
-//    }
-       
+    }      
 
-    // submission of the editor form
+    // Handles submission of the editor form (creating and updating)
     @PostMapping("/editor")
-    public String submitEditorForm(@ModelAttribute Editor editor, @RequestParam ("storyId") String storyId, @RequestParam("diagramData") String diagramData, @RequestParam("charNotes") String charNotes, @RequestParam("story") String story, String storyTitle, Model model) {
+    public String submitEditorForm(@ModelAttribute Editor editor, @RequestParam ("storyId") String storyId,
+    		@RequestParam("diagramData") String diagramData,@RequestParam("charNotes") String charNotes,
+    		@RequestParam("story") String story, @RequestParam("charMapData") String charMapData,
+    		String storyTitle, Model model) {
         
     	// Retrieve the current user's username
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -169,66 +144,29 @@ public class EditorController {
         User user = userService.findByUsername(username);
         if (user != null) {
         	
-        	Editor existingEditor = editorService.findEditorByStoryId(storyId);
-        	
-//        	editor.setStoryId(storyId);  // Set the storyId here
-        	
             // Print out the current and updated values for debugging
-            System.out.println("Current diagramData: " + editor.getDiagramData());
-            System.out.println("Updated diagramData: " + diagramData);
+            System.out.println("Current charMapData: " + editor.getCharMapData());
+            System.out.println("Updated charMapData: " + charMapData);
+
             
-            System.out.println("Current charNotes: " + editor.getCharNotes());
-            System.out.println("Updated charNotes: " + charNotes);
-            
-            System.out.println("Current story: " + editor.getStory());
-            System.out.println("Updated story: " + story);
-            
-            System.out.println("Curent Story Title: " + editor.getStoryTitle());
-            System.out.println("Updated Story Title: " + storyTitle);
-            
-            System.out.println("Submitted storyId: " + storyId);  // Check the UUID valu
+            System.out.println("Submitted storyId: " + storyId);  // Check the UUID value
 
             // If editor exists, update its fields
             if (editor != null) {
             	editor.setStoryTitle(storyTitle);
-                editor.setDiagramData(diagramData);
-                editor.setCharNotes(charNotes);
-                editor.setStory(story);
-                editor.setCreateDate(LocalDateTime.now());
+            	editor.setDiagramData(diagramData);
+            	editor.setCharMapData(charMapData);
+            	editor.setCharNotes(charNotes);
+            	editor.setStory(story);
+            	editor.setCreateDate(LocalDateTime.now());
                 editorService.saveEditor(editor);
                 model.addAttribute("message", "Editor updated successfully!");
-                System.out.println("Editor updated and saved to database");
-            } else {
-            	System.out.println();
-                // Handle the case where there is no existing editor
-                editor = new Editor();
-                editor.setUserId(user.getUserId());
-                editor.setStoryTitle(storyTitle);
-                editor.setDiagramData(diagramData);
-                editor.setCharNotes(charNotes);
-                editor.setStory(story);
-                editor.setCreateDate(LocalDateTime.now());
-                editorService.saveEditor(editor);
-                model.addAttribute("message", "Editor created and saved successfully!");
-                System.out.println("New editor created and saved to database");
-            }
+//                System.out.println("Editor updated and saved to database");	// for debugging
+            } 
         } else {
             model.addAttribute("error", "User not found");
         }
-//        if (user != null) {
-//            // Set creation date and userId, then save the editor
-//            editor.setCreateDate(LocalDateTime.now());
-//            editor.setUserId(user.getUserId());
-//            editor.setDiagramData(diagramData);
-//            editor.setCharNotes(charNotes);
-//            editor.setStory(story);
-//            editorService.saveEditor(editor);
-//            model.addAttribute("message", "Editor updated successfully!");
-//            System.out.println("Submitted to database");
-//        } else {
-//            model.addAttribute("error", "User not found");
-//        }
         
         return "redirect:/home";
-    }
+    }   
 }

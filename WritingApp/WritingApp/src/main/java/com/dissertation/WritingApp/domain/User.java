@@ -13,7 +13,6 @@ public class User {
     private @MongoId ObjectId userId;
     private String username;
     private String password;
-    private Set<UserRole> userRoles;
     private String fullname;
     private String email;
     private boolean emailVerified; // To track email confirmation
@@ -46,16 +45,6 @@ public class User {
         this.password = password;
     }
 
-    public void setUserRoles(Set<UserRole> userRoles) {
-        this.userRoles = userRoles;
-    }
-
-//    @Override
-    public Set<UserRole> getAuthorities() {
-        return this.userRoles;
-    }
-
-//    @Override
     public String getUsername() {
         return this.username;
     }
@@ -81,7 +70,6 @@ public class User {
 	}
 
     public boolean isEmailVerified() {
-//		return emailVerified != null && emailVerified;
     	return emailVerified;
 	}
 
