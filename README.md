@@ -45,12 +45,12 @@ The application was designed to:
 ## Technologies Used
 
 - **Programming Language:** Java  
-- **Web Framework:** Spring Boot (or update if different)
-- **Build Tool:** Maven (update if Gradle)
+- **Web Framework:** Spring Boot
+- **Build Tool:** Maven 
 - **Testing:** JUnit (unit and integration testing)
 - **Version Control:** Git
 - **IDE:** IntelliJ IDEA / Eclipse
-- **Markup & UI:** HTML, CSS, Thymeleaf (if applicable)
+- **Markup & UI:** HTML, CSS, Thymeleaf 
 
 The technology stack reflects patterns commonly used in enterprise and server-based application development.
 
